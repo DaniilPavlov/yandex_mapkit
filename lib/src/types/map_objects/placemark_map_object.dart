@@ -197,14 +197,14 @@ class PlacemarkMapObject extends Equatable implements MapObject {
   @override
   List<Object?> get props => <Object?>[
     mapId,
-    point,
-    zIndex,
-    consumeTapEvents,
-    isVisible,
-    isDraggable,
-    opacity,
-    direction,
-    icon,
+    // point,
+    // zIndex,
+    // consumeTapEvents,
+    // isVisible,
+    // isDraggable,
+    // opacity,
+    // direction,
+    // icon,
     text
   ];
 
