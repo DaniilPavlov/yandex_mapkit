@@ -5,7 +5,13 @@ class UtilsFull: UtilsLite {
     let point = pointFromJson(json["point"] as! [String: NSNumber])
     let pointType = YMKRequestPointType(rawValue: (json["requestPointType"] as! NSNumber).uintValue)!
 
-    return YMKRequestPoint(point: point, type: pointType, pointContext: nil, drivingArrivalPointId: nil)
+    return YMKRequestPoint(
+      point: point, 
+      type: pointType, 
+      pointContext: nil, 
+      drivingArrivalPointId: nil,
+      indoorLevelId: nil
+    )
   }
 
   static func timeOptionsFromJson(_ json: [String: Any]) -> YMKTimeOptions {
@@ -19,15 +25,19 @@ class UtilsFull: UtilsLite {
     )
   }
 
+  static func routeOptionsFromJson(_ json: [String: Any]) -> YMKRouteOptions {
+    return YMKRouteOptions(
+      fitnessOptions: json["fitnessOptions"] as! YMKFitnessOptions,
+    )
+  }
+
   static func drivingOptionsFromJson(_ json: [String: Any]) -> YMKDrivingOptions {
     return YMKDrivingOptions(
       initialAzimuth: json["initialAzimuth"] as? NSNumber,
       routesCount: json["routesCount"] as? NSNumber,
-      avoidTolls: json["avoidTolls"] as? NSNumber,
-      avoidUnpaved: json["avoidUnpaved"] as? NSNumber,
-      avoidPoorConditions: json["avoidPoorConditions"] as? NSNumber,
       departureTime: nil,
-      annotationLanguage: nil
+      annotationLanguage: nil,
+      avoidanceFlags: nil
     )
   }
 
@@ -56,7 +66,8 @@ class UtilsFull: UtilsLite {
     return YMKSuggestOptions(
       suggestTypes: YMKSuggestType.init(rawValue: (json["suggestType"] as! NSNumber).uintValue),
       userPosition: userPosition,
-      suggestWords: (json["suggestWords"] as! NSNumber).boolValue
+      suggestWords: (json["suggestWords"] as! NSNumber).boolValue,
+      strictBounds: (json["strictBounds"] as! NSNumber).boolValue
     )
   }
 }

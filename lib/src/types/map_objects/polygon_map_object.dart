@@ -144,9 +144,9 @@ class PolygonMapObject extends Equatable implements MapObject {
       'zIndex': zIndex,
       'consumeTapEvents': consumeTapEvents,
       'isVisible': isVisible,
-      'strokeColor': strokeColor.value,
+      'strokeColor': strokeColor.toARGB32(),
       'strokeWidth': strokeWidth,
-      'fillColor': fillColor.value,
+      'fillColor': fillColor.toARGB32(),
     };
   }
 

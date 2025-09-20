@@ -1,49 +1,53 @@
 part of '../../../yandex_mapkit.dart';
 
 /// Options to fine-tune driving request.
-class DrivingOptions extends Equatable {
 
+class DrivingOptions extends Equatable {
   /// Starting location azimuth.
+  ///
   final double? initialAzimuth;
 
   /// The number of alternatives.
+  ///
   final int? routesCount;
+  final DateTime? departureTime;
 
-  /// Instructs the router to return routes that avoid tolls, when possible.
-  final bool? avoidTolls;
+  /// A method to set the annotation language. lang The annotation
+  /// language.
+  ///
+  final AnnotationLanguage? annotationLanguage;
 
-  /// Instructs the router to return routes that avoid unpaved roads when possible.
-  final bool? avoidUnpaved;
-
-  /// Instructs the router to return routes that avoid roads in poor conditions when possible.
-  final bool? avoidPoorConditions;
+  /// The 'avoidanceFlags' instruct the router to return routes that avoid
+  /// roads with the specified properties when possible.
+  ///
+  final DrivingAvoidanceFlags? avoidanceFlags;
 
   const DrivingOptions({
     this.initialAzimuth,
     this.routesCount,
-    this.avoidTolls,
-    this.avoidUnpaved,
-    this.avoidPoorConditions
+    this.departureTime,
+    this.annotationLanguage,
+    this.avoidanceFlags,
   });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'initialAzimuth': initialAzimuth,
       'routesCount': routesCount,
-      'avoidTolls': avoidTolls,
-      'avoidUnpaved': avoidUnpaved,
-      'avoidPoorConditions': avoidPoorConditions
+      'departureTime': departureTime,
+      'annotationLanguage': annotationLanguage,
+      'avoidanceFlags': avoidanceFlags
     };
   }
 
   @override
   List<Object?> get props => <Object?>[
-    initialAzimuth,
-    routesCount,
-    avoidTolls,
-    avoidUnpaved,
-    avoidPoorConditions
-  ];
+        initialAzimuth,
+        routesCount,
+        departureTime,
+        annotationLanguage,
+        avoidanceFlags,
+      ];
 
   @override
   bool get stringify => true;

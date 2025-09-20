@@ -1,9 +1,5 @@
-library yandex_mapkit;
-
 import 'dart:async';
 import 'dart:core';
-import 'dart:typed_data'; // ignore: unnecessary_import
-
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -77,3 +73,5 @@ part 'src/yandex_map_controller.dart';
 part 'src/yandex_pedestrian.dart';
 part 'src/yandex_search.dart';
 part 'src/yandex_suggest.dart';
+part 'src/types/driving/annotation_language_enum.dart';
+part 'src/types/driving/avoidance_flags.dart';

@@ -51,11 +51,11 @@ import YandexMapsMobile
 }
 ```
 
-* Uncomment `platform :ios, '9.0'` in `ios/Podfile` and change to `platform :ios, '12.0'`
+* Uncomment `platform :ios, '9.0'` in `ios/Podfile` and change to `platform :ios, '13.0'`
 
 ```ruby
 # Uncomment this line to define a global platform for your project
-platform :ios, '12.0'
+platform :ios, '13.0'
 ```
 
 * Specify your desired variant of native library.  

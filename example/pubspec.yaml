@@ -1,22 +1,22 @@
 name: yandex_mapkit_example
 description: Demonstrates how to use the yandex_mapkit plugin.
-version: 1.0.0+1
+version: 1.0.0+2
 publish_to: none
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.35.3"
 
 dependencies:
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
   yandex_mapkit:
     path: ../
 
 dev_dependencies:
-  flutter_lints: ^3.0.2
+  flutter_lints: ^6.0.0
 
 flutter:
   assets:
