@@ -2,6 +2,9 @@ part of '../../../yandex_mapkit.dart';
 
 /// A rectangular box around the object.
 class BoundingBox extends Equatable {
+  factory BoundingBox._fromJson(Map<dynamic, dynamic> json) {
+    return BoundingBox(northEast: Point._fromJson(json['northEast']), southWest: Point._fromJson(json['southWest']));
+  }
   const BoundingBox({
     required this.northEast,
     required this.southWest,
@@ -15,9 +18,9 @@ class BoundingBox extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    northEast,
-    southWest,
-  ];
+        northEast,
+        southWest,
+      ];
 
   @override
   bool get stringify => true;
@@ -27,12 +30,5 @@ class BoundingBox extends Equatable {
       'northEast': northEast.toJson(),
       'southWest': southWest.toJson(),
     };
-  }
-
-  factory BoundingBox._fromJson(Map<dynamic, dynamic> json) {
-    return BoundingBox(
-      northEast: Point._fromJson(json['northEast']),
-      southWest: Point._fromJson(json['southWest'])
-    );
   }
 }

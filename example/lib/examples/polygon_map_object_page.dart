@@ -33,8 +33,8 @@ class _PolygonMapObjectExampleState extends State<_PolygonMapObjectExample> {
       children: <Widget>[
         Expanded(
           child: YandexMap(
-            mapObjects: mapObjects
-          )
+            mapObjects: mapObjects,
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -53,30 +53,34 @@ class _PolygonMapObjectExampleState extends State<_PolygonMapObjectExample> {
                         final mapObject = PolygonMapObject(
                           mapId: mapObjectId,
                           polygon: const Polygon(
-                            outerRing: LinearRing(points: [
-                              Point(latitude: 56.34295, longitude: 74.62829),
-                              Point(latitude: 70.12669, longitude: 98.97399),
-                              Point(latitude: 56.04956, longitude: 125.07751),
-                            ]),
+                            outerRing: LinearRing(
+                              points: [
+                                Point(latitude: 56.34295, longitude: 74.62829),
+                                Point(latitude: 70.12669, longitude: 98.97399),
+                                Point(latitude: 56.04956, longitude: 125.07751),
+                              ],
+                            ),
                             innerRings: [
-                              LinearRing(points: [
-                                Point(latitude: 57.34295, longitude: 78.62829),
-                                Point(latitude: 69.12669, longitude: 98.97399),
-                                Point(latitude: 57.04956, longitude: 121.07751),
-                              ])
-                            ]
+                              LinearRing(
+                                points: [
+                                  Point(latitude: 57.34295, longitude: 78.62829),
+                                  Point(latitude: 69.12669, longitude: 98.97399),
+                                  Point(latitude: 57.04956, longitude: 121.07751),
+                                ],
+                              ),
+                            ],
                           ),
                           strokeColor: Colors.orange[700]!,
                           strokeWidth: 3.0,
                           fillColor: Colors.yellow[200]!,
-                          onTap: (PolygonMapObject self, Point point) => print('Tapped me at $point'),
+                          onTap: (PolygonMapObject self, Point point) => debugPrint('Tapped me at $point'),
                         );
 
                         setState(() {
                           mapObjects.add(mapObject);
                         });
                       },
-                      title: 'Add'
+                      title: 'Add',
                     ),
                     ControlButton(
                       onPressed: () async {
@@ -94,7 +98,7 @@ class _PolygonMapObjectExampleState extends State<_PolygonMapObjectExample> {
                           );
                         });
                       },
-                      title: 'Update'
+                      title: 'Update',
                     ),
                     ControlButton(
                       onPressed: () async {
@@ -102,15 +106,15 @@ class _PolygonMapObjectExampleState extends State<_PolygonMapObjectExample> {
                           mapObjects.removeWhere((el) => el.mapId == mapObjectId);
                         });
                       },
-                      title: 'Remove'
-                    )
+                      title: 'Remove',
+                    ),
                   ],
-                )
-              ]
-            )
-          )
-        )
-      ]
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

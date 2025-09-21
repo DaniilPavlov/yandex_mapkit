@@ -2,8 +2,6 @@ part of '../../../yandex_mapkit.dart';
 
 /// Collection of points connected by lines to be displayed on [YandexMap]
 class PolylineMapObject extends Equatable implements MapObject {
-  static const _kType = 'PolylineMapObject';
-
   const PolylineMapObject({
     required this.mapId,
     required this.polyline,
@@ -21,8 +19,9 @@ class PolylineMapObject extends Equatable implements MapObject {
     this.turnRadius = 10.0,
     this.arcApproximationStep = 12.0,
     this.gradientLength = 0,
-    this.isInnerOutlineEnabled = false
+    this.isInnerOutlineEnabled = false,
   });
+  static const _kType = 'PolylineMapObject';
 
   /// The geometry of the map object.
   final Polyline polyline;
@@ -207,47 +206,40 @@ class PolylineMapObject extends Equatable implements MapObject {
 
   @override
   Map<String, dynamic> _createJson() {
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _updateJson(MapObject previous) {
     assert(mapId == previous.mapId);
 
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _removeJson() {
-    return {
-      'id': mapId.value,
-      'type': _kType
-    };
+    return {'id': mapId.value, 'type': _kType};
   }
 
   @override
   List<Object> get props => <Object>[
-    mapId,
-    polyline,
-    zIndex,
-    consumeTapEvents,
-    isVisible,
-    strokeColor,
-    strokeWidth,
-    outlineColor,
-    outlineWidth,
-    dashLength,
-    dashOffset,
-    gapLength,
-    turnRadius,
-    arcApproximationStep,
-    gradientLength,
-    isInnerOutlineEnabled,
-  ];
+        mapId,
+        polyline,
+        zIndex,
+        consumeTapEvents,
+        isVisible,
+        strokeColor,
+        strokeWidth,
+        outlineColor,
+        outlineWidth,
+        dashLength,
+        dashOffset,
+        gapLength,
+        turnRadius,
+        arcApproximationStep,
+        gradientLength,
+        isInnerOutlineEnabled,
+      ];
 
   @override
   bool get stringify => true;

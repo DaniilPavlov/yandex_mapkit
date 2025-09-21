@@ -2,8 +2,6 @@ part of '../../../yandex_mapkit.dart';
 
 /// A polygon to be displayed on [YandexMap]
 class PolygonMapObject extends Equatable implements MapObject {
-  static const _kType = 'PolygonMapObject';
-
   const PolygonMapObject({
     required this.mapId,
     required this.polygon,
@@ -16,6 +14,7 @@ class PolygonMapObject extends Equatable implements MapObject {
     this.strokeColor = const Color(0xFF0066FF),
     this.fillColor = const Color(0x00000000),
   });
+  static const _kType = 'PolygonMapObject';
 
   /// The geometry of the map object.
   final Polygon polygon;
@@ -69,7 +68,7 @@ class PolygonMapObject extends Equatable implements MapObject {
     bool? isVisible,
     Color? fillColor,
     Color? strokeColor,
-    double? strokeWidth
+    double? strokeWidth,
   }) {
     return PolygonMapObject(
       mapId: mapId,
@@ -81,7 +80,7 @@ class PolygonMapObject extends Equatable implements MapObject {
       isVisible: isVisible ?? this.isVisible,
       fillColor: fillColor ?? this.fillColor,
       strokeColor: strokeColor ?? this.strokeColor,
-      strokeWidth: strokeWidth ?? this.strokeWidth
+      strokeWidth: strokeWidth ?? this.strokeWidth,
     );
   }
 
@@ -103,7 +102,7 @@ class PolygonMapObject extends Equatable implements MapObject {
       isVisible: isVisible,
       fillColor: fillColor,
       strokeColor: strokeColor,
-      strokeWidth: strokeWidth
+      strokeWidth: strokeWidth,
     );
   }
 
@@ -152,40 +151,24 @@ class PolygonMapObject extends Equatable implements MapObject {
 
   @override
   Map<String, dynamic> _createJson() {
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _updateJson(MapObject previous) {
     assert(mapId == previous.mapId);
 
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _removeJson() {
-    return {
-      'id': mapId.value,
-      'type': _kType
-    };
+    return {'id': mapId.value, 'type': _kType};
   }
 
   @override
-  List<Object> get props => <Object>[
-    mapId,
-    polygon,
-    isGeodesic,
-    zIndex,
-    consumeTapEvents,
-    isVisible,
-    strokeColor,
-    strokeWidth,
-    fillColor
-  ];
+  List<Object> get props =>
+      <Object>[mapId, polygon, isGeodesic, zIndex, consumeTapEvents, isVisible, strokeColor, strokeWidth, fillColor];
 
   @override
   bool get stringify => true;

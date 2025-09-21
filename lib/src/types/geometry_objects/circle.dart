@@ -2,9 +2,15 @@ part of '../../../yandex_mapkit.dart';
 
 /// A circle around the specified point.
 class Circle extends Equatable {
+  factory Circle._fromJson(Map<dynamic, dynamic> json) {
+    return Circle(
+      center: Point._fromJson(json['center']),
+      radius: json['radius'],
+    );
+  }
   const Circle({
     required this.center,
-    required this.radius
+    required this.radius,
   });
 
   /// The list of points to connect.
@@ -15,9 +21,9 @@ class Circle extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    center,
-    radius
-  ];
+        center,
+        radius,
+      ];
 
   @override
   bool get stringify => true;
@@ -25,14 +31,7 @@ class Circle extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'center': center.toJson(),
-      'radius': radius
+      'radius': radius,
     };
-  }
-
-  factory Circle._fromJson(Map<dynamic, dynamic> json) {
-    return Circle(
-      center: Point._fromJson(json['center']),
-      radius: json['radius']
-    );
   }
 }

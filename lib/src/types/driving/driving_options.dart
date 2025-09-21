@@ -3,6 +3,14 @@ part of '../../../yandex_mapkit.dart';
 /// Options to fine-tune driving request.
 
 class DrivingOptions extends Equatable {
+  const DrivingOptions({
+    this.initialAzimuth,
+    this.routesCount,
+    this.departureTime,
+    this.annotationLanguage,
+    this.avoidanceFlags,
+  });
+
   /// Starting location azimuth.
   ///
   final double? initialAzimuth;
@@ -22,21 +30,13 @@ class DrivingOptions extends Equatable {
   ///
   final DrivingAvoidanceFlags? avoidanceFlags;
 
-  const DrivingOptions({
-    this.initialAzimuth,
-    this.routesCount,
-    this.departureTime,
-    this.annotationLanguage,
-    this.avoidanceFlags,
-  });
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'initialAzimuth': initialAzimuth,
       'routesCount': routesCount,
       'departureTime': departureTime,
       'annotationLanguage': annotationLanguage,
-      'avoidanceFlags': avoidanceFlags
+      'avoidanceFlags': avoidanceFlags,
     };
   }
 

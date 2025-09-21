@@ -2,6 +2,11 @@ part of '../../yandex_mapkit.dart';
 
 /// Boundaries of the camera on map.
 class CameraBounds extends Equatable {
+  const CameraBounds({
+    this.minZoom = 2,
+    this.maxZoom = 18,
+    this.latLngBounds,
+  });
 
   /// Minimum available zoom level considering zoom level
   final double minZoom;
@@ -12,27 +17,13 @@ class CameraBounds extends Equatable {
   /// Camera bounding box
   final BoundingBox? latLngBounds;
 
-  const CameraBounds({
-    this.minZoom = 2,
-    this.maxZoom = 18,
-    this.latLngBounds,
-  });
-
   @override
-  List<Object?> get props => <Object?>[
-    minZoom,
-    maxZoom,
-    latLngBounds
-  ];
+  List<Object?> get props => <Object?>[minZoom, maxZoom, latLngBounds];
 
   @override
   bool get stringify => true;
 
   Map<String, dynamic> toJson() {
-    return {
-      'minZoom': minZoom,
-      'maxZoom': maxZoom,
-      'latLngBounds': latLngBounds?.toJson()
-    };
+    return {'minZoom': minZoom, 'maxZoom': maxZoom, 'latLngBounds': latLngBounds?.toJson()};
   }
 }

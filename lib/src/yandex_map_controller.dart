@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 part of '../yandex_mapkit.dart';
 
 class YandexMapController extends ChangeNotifier {
@@ -33,29 +35,23 @@ class YandexMapController extends ChangeNotifier {
     required bool visible,
     bool headingEnabled = true,
     bool autoZoomEnabled = false,
-    UserLocationAnchor? anchor
+    UserLocationAnchor? anchor,
   }) async {
-    await _channel.invokeMethod(
-      'toggleUserLayer',
-      {
-        'visible': visible,
-        'headingEnabled': headingEnabled,
-        'autoZoomEnabled': autoZoomEnabled,
-        'anchor': anchor?.toJson()
-      }
-    );
+    await _channel.invokeMethod('toggleUserLayer', {
+      'visible': visible,
+      'headingEnabled': headingEnabled,
+      'autoZoomEnabled': autoZoomEnabled,
+      'anchor': anchor?.toJson(),
+    });
   }
 
   /// Toggles layer with traffic information
   Future<void> toggleTrafficLayer({
-    required bool visible
+    required bool visible,
   }) async {
-    await _channel.invokeMethod(
-      'toggleTrafficLayer',
-      {
-        'visible': visible
-      }
-    );
+    await _channel.invokeMethod('toggleTrafficLayer', {
+      'visible': visible,
+    });
   }
 
   /// Selects a geo object with the specified objectId in the specified layerId with specified dataSourceName.
@@ -65,13 +61,13 @@ class YandexMapController extends ChangeNotifier {
     required String objectId,
     required String layerId,
     int? groupId,
-    required String dataSourceName
+    required String dataSourceName,
   }) async {
     await _channel.invokeMethod('selectGeoObject', {
       'objectId': objectId,
       'layerId': layerId,
       'groupId': groupId,
-      'dataSourceName': dataSourceName
+      'dataSourceName': dataSourceName,
     });
   }
 
@@ -97,16 +93,14 @@ class YandexMapController extends ChangeNotifier {
   /// Returns true if camera position has been succesfully changes
   /// Returns false if camera position movement has been canceled
   /// (for example, as a result of a subsequent request for camera movement)
-  Future<bool> moveCamera(CameraUpdate cameraUpdate, {
-    MapAnimation? animation
+  Future<bool> moveCamera(
+    CameraUpdate cameraUpdate, {
+    MapAnimation? animation,
   }) async {
-    return await _channel.invokeMethod(
-      'moveCamera',
-      {
-        'cameraUpdate': cameraUpdate.toJson(),
-        'animation': animation?.toJson(),
-      }
-    );
+    return await _channel.invokeMethod('moveCamera', {
+      'cameraUpdate': cameraUpdate.toJson(),
+      'animation': animation?.toJson(),
+    });
   }
 
   /// Transforms the position from map coordinates to screen coordinates.
@@ -250,27 +244,27 @@ class YandexMapController extends ChangeNotifier {
     _yandexMapState.widget.onCameraPositionChanged!(
       CameraPosition._fromJson(arguments['cameraPosition']),
       CameraUpdateReason.values[arguments['reason']],
-      arguments['finished']
+      arguments['finished'],
     );
   }
 
   Future<Map<String, dynamic>?> _onUserLocationAdded(dynamic arguments) async {
     final pin = PlacemarkMapObject(
       mapId: const MapObjectId('user_location_pin'),
-      point: Point._fromJson(arguments['pinPoint'])
+      point: Point._fromJson(arguments['pinPoint']),
     );
     final arrow = PlacemarkMapObject(
       mapId: const MapObjectId('user_location_arrow'),
-      point: Point._fromJson(arguments['arrowPoint'])
+      point: Point._fromJson(arguments['arrowPoint']),
     );
     final accuracyCircle = CircleMapObject(
       mapId: const MapObjectId('user_location_accuracy_circle'),
-      circle: Circle._fromJson(arguments['circle'])
+      circle: Circle._fromJson(arguments['circle']),
     );
     final view = UserLocationView._(arrow: arrow, pin: pin, accuracyCircle: accuracyCircle);
-    final newView = _yandexMapState.widget.onUserLocationAdded != null ?
-      (await _yandexMapState.widget.onUserLocationAdded!(view)) :
-      view;
+    final newView = _yandexMapState.widget.onUserLocationAdded != null
+        ? (await _yandexMapState.widget.onUserLocationAdded!(view))
+        : view;
     final newPin = newView?.pin.dup(pin.mapId) ?? pin;
     final newArrow = newView?.arrow.dup(arrow.mapId) ?? arrow;
     final newAccuracyCircle = newView?.accuracyCircle.dup(accuracyCircle.mapId) ?? accuracyCircle;
@@ -280,7 +274,7 @@ class YandexMapController extends ChangeNotifier {
     return {
       'pin': newPin.toJson(),
       'arrow': newArrow.toJson(),
-      'accuracyCircle': newAccuracyCircle.toJson()
+      'accuracyCircle': newAccuracyCircle.toJson(),
     };
   }
 
@@ -297,11 +291,11 @@ class YandexMapController extends ChangeNotifier {
     final size = arguments['size'];
     final mapObject = _findMapObject(_yandexMapState._allMapObjects, id) as ClusterizedPlacemarkCollection;
     final placemarks = arguments['placemarkIds']
-      .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
-      .toList();
+        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
+        .toList();
     final appearance = PlacemarkMapObject(
       mapId: MapObjectId(arguments['appearancePlacemarkId']),
-      point: Point._fromJson(arguments['point'])
+      point: Point._fromJson(arguments['point']),
     );
     final cluster = Cluster._(size: size, appearance: appearance, placemarks: placemarks);
     final newAppearance = (await mapObject._clusterAdd(cluster))?.appearance ?? cluster.appearance;
@@ -316,11 +310,11 @@ class YandexMapController extends ChangeNotifier {
     final size = arguments['size'];
     final mapObject = _findMapObject(_yandexMapState._allMapObjects, id) as ClusterizedPlacemarkCollection;
     final placemarks = arguments['placemarkIds']
-      .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
-      .toList();
+        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
+        .toList();
     final appearance = _findMapObject(
       _yandexMapState._allMapObjects,
-      arguments['appearancePlacemarkId']
+      arguments['appearancePlacemarkId'],
     ) as PlacemarkMapObject;
     final cluster = Cluster._(size: size, appearance: appearance, placemarks: placemarks);
 

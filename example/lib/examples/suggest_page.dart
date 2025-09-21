@@ -45,51 +45,50 @@ class _SuggestionsExampleState extends State<_SuggestionsExample> {
                     ),
                     ControlButton(
                       onPressed: _suggest,
-                      title: 'Query'
+                      title: 'Query',
                     ),
                   ],
                 ),
-              ]
-            )
-          )
-        )
-      ]
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Future<void> _suggest() async {
     final query = queryController.text;
 
-    print('Suggest query: $query');
+    debugPrint('Suggest query: $query');
 
     final resultWithSession = await YandexSuggest.getSuggestions(
       text: query,
       boundingBox: const BoundingBox(
         northEast: Point(latitude: 56.0421, longitude: 38.0284),
-        southWest: Point(latitude: 55.5143, longitude: 37.24841)
+        southWest: Point(latitude: 55.5143, longitude: 37.24841),
       ),
       suggestOptions: const SuggestOptions(
         suggestType: SuggestType.geo,
         suggestWords: true,
-        userPosition: Point(latitude: 56.0321, longitude: 38)
-      )
+        userPosition: Point(latitude: 56.0321, longitude: 38),
+      ),
     );
-
+    if (!mounted) return;
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => _SessionPage(query, resultWithSession.$1, resultWithSession.$2)
-      )
+        builder: (BuildContext context) => _SessionPage(query, resultWithSession.$1, resultWithSession.$2),
+      ),
     );
   }
 }
 
 class _SessionPage extends StatefulWidget {
+  const _SessionPage(this.query, this.session, this.result);
   final Future<SuggestSessionResult> result;
   final SuggestSession session;
   final String query;
-
-  const _SessionPage(this.query, this.session, this.result);
 
   @override
   _SessionState createState() => _SessionState();
@@ -134,14 +133,21 @@ class _SessionState extends State<_SessionPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(widget.query, style: const TextStyle(fontSize: 20,)),
-                          !_progress ? Container() : TextButton.icon(
-                            icon: const CircularProgressIndicator(),
-                            label: const Text('Reset'),
-                            onPressed: _reset
-                          )
+                          Text(
+                            widget.query,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          !_progress
+                              ? Container()
+                              : TextButton.icon(
+                                  icon: const CircularProgressIndicator(),
+                                  label: const Text('Reset'),
+                                  onPressed: _reset,
+                                ),
                         ],
-                      )
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -152,18 +158,18 @@ class _SessionState extends State<_SessionPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: _getList(),
-                            )
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ]
-                )
-              )
-            )
-          ]
-        )
-      )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -186,7 +192,9 @@ class _SessionState extends State<_SessionPage> {
   Future<void> _reset() async {
     await widget.session.reset();
 
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
   }
 
   Future<void> _close() async {
@@ -198,13 +206,17 @@ class _SessionState extends State<_SessionPage> {
   }
 
   Future<void> _handleResult(SuggestSessionResult result) async {
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
 
     if (result.error != null) {
-      print('Error: ${result.error}');
+      debugPrint('Error: ${result.error}');
       return;
     }
 
-    setState(() { results.add(result); });
+    setState(() {
+      results.add(result);
+    });
   }
 }

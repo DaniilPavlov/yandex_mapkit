@@ -2,6 +2,14 @@ part of '../../yandex_mapkit.dart';
 
 /// Defines the visible region.
 class VisibleRegion extends Equatable {
+  factory VisibleRegion._fromJson(Map<dynamic, dynamic> json) {
+    return VisibleRegion._(
+      Point._fromJson(json['topLeft']),
+      Point._fromJson(json['topRight']),
+      Point._fromJson(json['bottomLeft']),
+      Point._fromJson(json['bottomRight']),
+    );
+  }
   const VisibleRegion._(
     this.topLeft,
     this.topRight,
@@ -23,21 +31,12 @@ class VisibleRegion extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    topLeft,
-    topRight,
-    bottomLeft,
-    bottomRight,
-  ];
+        topLeft,
+        topRight,
+        bottomLeft,
+        bottomRight,
+      ];
 
   @override
   bool get stringify => true;
-
-  factory VisibleRegion._fromJson(Map<dynamic, dynamic> json) {
-    return VisibleRegion._(
-      Point._fromJson(json['topLeft']),
-      Point._fromJson(json['topRight']),
-      Point._fromJson(json['bottomLeft']),
-      Point._fromJson(json['bottomRight']),
-    );
-  }
 }

@@ -2,6 +2,14 @@ part of '../../../yandex_mapkit.dart';
 
 /// Options to fine-tune search request.
 class SearchOptions extends Equatable {
+  const SearchOptions({
+    this.searchType = SearchType.none,
+    this.geometry = false,
+    this.disableSpellingCorrection = false,
+    this.resultPageSize,
+    this.userPosition,
+    this.origin,
+  });
 
   /// What type of searches to look for
   /// If searchType is empty, it means to use server-defined types
@@ -22,15 +30,6 @@ class SearchOptions extends Equatable {
   /// String that sets an identifier for the request source.
   final String? origin;
 
-  const SearchOptions({
-    this.searchType = SearchType.none,
-    this.geometry = false,
-    this.disableSpellingCorrection = false,
-    this.resultPageSize,
-    this.userPosition,
-    this.origin,
-  });
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'searchType': searchType.index,
@@ -38,19 +37,13 @@ class SearchOptions extends Equatable {
       'disableSpellingCorrection': disableSpellingCorrection,
       'resultPageSize': resultPageSize,
       'userPosition': userPosition?.toJson(),
-      'origin': origin
+      'origin': origin,
     };
   }
 
   @override
-  List<Object?> get props => <Object?>[
-    searchType,
-    geometry,
-    disableSpellingCorrection,
-    resultPageSize,
-    userPosition,
-    origin
-  ];
+  List<Object?> get props =>
+      <Object?>[searchType, geometry, disableSpellingCorrection, resultPageSize, userPosition, origin];
 
   @override
   bool get stringify => true;
@@ -59,17 +52,7 @@ class SearchOptions extends Equatable {
 /// Bitmask for requested search types.
 /// Only none, geo, biz are currently implements
 /// Other types are left for future compatability
-enum SearchType {
-  none,
-  geo,
-  biz,
-  transit,
-  collections,
-  direct,
-  goods,
-  pointsOfInterest,
-  massTransit
-}
+enum SearchType { none, geo, biz, transit, collections, direct, goods, pointsOfInterest, massTransit }
 
 extension SearchTypeExtension on SearchType {
   int get value {

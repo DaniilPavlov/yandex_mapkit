@@ -1,14 +1,12 @@
 part of '../../../yandex_mapkit.dart';
 
 class PedestrianSession {
+  PedestrianSession._({required this.id}) : _methodChannel = MethodChannel(_methodChannelName + id.toString());
   static const String _methodChannelName = 'yandex_mapkit/yandex_pedestrian_session_';
   final MethodChannel _methodChannel;
 
   /// Unique session identifier
   final int id;
-
-  PedestrianSession._({required this.id}) :
-    _methodChannel = MethodChannel(_methodChannelName + id.toString());
 
   /// Retries current session
   Future<void> retry() async {
@@ -28,7 +26,7 @@ class PedestrianSession {
   Future<PedestrianSessionResult> _requestRoutes({
     required List<RequestPoint> points,
     required bool avoidSteep,
-    required TimeOptions timeOptions
+    required TimeOptions timeOptions,
   }) async {
     final params = <String, dynamic>{
       'timeOptions': timeOptions.toJson(),
@@ -44,18 +42,19 @@ class PedestrianSession {
 /// Result of a request to build routes
 /// If any error has occured then [routes] will be empty, otherwise [error] will be empty
 class PedestrianSessionResult {
+  PedestrianSessionResult._(this.routes, this.error);
+
+  factory PedestrianSessionResult._fromJson(Map<dynamic, dynamic> json) {
+    return PedestrianSessionResult._(
+      // ignore: avoid_dynamic_calls
+      json['routes']?.map<PedestrianRoute>((dynamic route) => PedestrianRoute._fromJson(route)).toList(),
+      json['error'],
+    );
+  }
+
   /// Calculated routes
   final List<PedestrianRoute>? routes;
 
   /// Error message
   final String? error;
-
-  PedestrianSessionResult._(this.routes, this.error);
-
-  factory PedestrianSessionResult._fromJson(Map<dynamic, dynamic> json) {
-    return PedestrianSessionResult._(
-      json['routes']?.map<PedestrianRoute>((dynamic route) => PedestrianRoute._fromJson(route)).toList(),
-      json['error']
-    );
-  }
 }

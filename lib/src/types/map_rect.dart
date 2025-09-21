@@ -2,17 +2,16 @@ part of '../../yandex_mapkit.dart';
 
 /// The rectangle to display on the map.
 class MapRect {
+  MapRect({
+    required this.min,
+    required this.max,
+  });
 
   /// Minimum rectangle coordinates.
   final Offset min;
 
   /// Maximum rectangle coordinates.
   final Offset max;
-
-  MapRect({
-    required this.min,
-    required this.max,
-  });
 
   Map<String, dynamic> toJson() {
     return {
@@ -23,7 +22,7 @@ class MapRect {
       'max': {
         'dx': max.dx,
         'dy': max.dy,
-      }
+      },
     };
   }
 }

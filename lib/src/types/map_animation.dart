@@ -4,7 +4,7 @@ part of '../../yandex_mapkit.dart';
 class MapAnimation extends Equatable {
   const MapAnimation({
     this.type = MapAnimationType.smooth,
-    this.duration = 2.0
+    this.duration = 2.0,
   });
 
   /// Animation duration, in seconds.
@@ -15,9 +15,9 @@ class MapAnimation extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    type,
-    duration
-  ];
+        type,
+        duration,
+      ];
 
   @override
   bool get stringify => true;
@@ -25,13 +25,10 @@ class MapAnimation extends Equatable {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'type': type.index,
-      'duration': duration
+      'duration': duration,
     };
   }
 }
 
 /// Animation types
-enum MapAnimationType {
-  smooth,
-  linear
-}
+enum MapAnimationType { smooth, linear }

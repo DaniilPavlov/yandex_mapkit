@@ -2,16 +2,6 @@ part of '../../../yandex_mapkit.dart';
 
 /// Extended information about company.
 class SearchItemBusinessMetadata extends Equatable {
-
-  /// Company name.
-  final String name;
-
-  /// Short company name.
-  final String? shortName;
-
-  /// Human-readable address.
-  final SearchAddress address;
-
   const SearchItemBusinessMetadata._({
     required this.name,
     required this.address,
@@ -22,16 +12,25 @@ class SearchItemBusinessMetadata extends Equatable {
     return SearchItemBusinessMetadata._(
       name: json['name'],
       shortName: json['shortName'],
-      address: SearchAddress._fromJson(json['address'])
+      address: SearchAddress._fromJson(json['address']),
     );
   }
 
+  /// Company name.
+  final String name;
+
+  /// Short company name.
+  final String? shortName;
+
+  /// Human-readable address.
+  final SearchAddress address;
+
   @override
   List<Object?> get props => <Object?>[
-    name,
-    address,
-    shortName,
-  ];
+        name,
+        address,
+        shortName,
+      ];
 
   @override
   bool get stringify => true;

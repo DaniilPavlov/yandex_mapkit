@@ -39,20 +39,20 @@ const List<MapPage> _allPages = <MapPage>[
 ];
 
 class MainPage extends StatelessWidget {
-  const MainPage({ super.key});
+  const MainPage({super.key});
 
   void _pushPage(BuildContext context, MapPage page) {
     Navigator.push(
       context,
-      MaterialPageRoute<void>(builder: (_) =>
-        Scaffold(
+      MaterialPageRoute<void>(
+        builder: (_) => Scaffold(
           appBar: AppBar(title: Text(page.title)),
           body: Container(
             padding: const EdgeInsets.all(8),
-            child: page
-          )
-        )
-      )
+            child: page,
+          ),
+        ),
+      ),
     );
   }
 
@@ -65,8 +65,8 @@ class MainPage extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(8),
-              child: const YandexMap()
-            )
+              child: const YandexMap(),
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -75,10 +75,10 @@ class MainPage extends StatelessWidget {
                 title: Text(_allPages[index].title),
                 onTap: () => _pushPage(context, _allPages[index]),
               ),
-            )
-          )
-        ]
-      )
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

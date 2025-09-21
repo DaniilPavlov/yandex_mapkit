@@ -11,7 +11,7 @@ class YandexSearch {
   static Future<(SearchSession, Future<SearchSessionResult>)> searchByText({
     required String searchText,
     required Geometry geometry,
-    required SearchOptions searchOptions
+    required SearchOptions searchOptions,
   }) async {
     final session = await _initSession();
 
@@ -22,7 +22,7 @@ class YandexSearch {
   static Future<(SearchSession, Future<SearchSessionResult>)> searchByPoint({
     required Point point,
     int? zoom,
-    required SearchOptions searchOptions
+    required SearchOptions searchOptions,
   }) async {
     final session = await _initSession();
 
@@ -33,7 +33,7 @@ class YandexSearch {
   static Future<SearchSession> _initSession() async {
     final id = _nextId++;
 
-    await _channel.invokeMethod('initSession', { 'id': id });
+    await _channel.invokeMethod('initSession', {'id': id});
 
     return SearchSession._(id: id);
   }

@@ -2,8 +2,6 @@ part of '../../../yandex_mapkit.dart';
 
 /// A circle to be displayed on [YandexMap].
 class CircleMapObject extends Equatable implements MapObject<CircleMapObject> {
-  static const _kType = 'CircleMapObject';
-
   const CircleMapObject({
     required this.mapId,
     required this.circle,
@@ -16,6 +14,7 @@ class CircleMapObject extends Equatable implements MapObject<CircleMapObject> {
     this.strokeWidth = 5.0,
     this.fillColor = const Color(0xFF64B5F6),
   });
+  static const _kType = 'CircleMapObject';
 
   /// The geometry of the map object.
   final Circle circle;
@@ -68,7 +67,7 @@ class CircleMapObject extends Equatable implements MapObject<CircleMapObject> {
     bool? isVisible,
     Color? fillColor,
     Color? strokeColor,
-    double? strokeWidth
+    double? strokeWidth,
   }) {
     return CircleMapObject(
       mapId: mapId,
@@ -80,7 +79,7 @@ class CircleMapObject extends Equatable implements MapObject<CircleMapObject> {
       isVisible: isVisible ?? this.isVisible,
       fillColor: fillColor ?? this.fillColor,
       strokeColor: strokeColor ?? this.strokeColor,
-      strokeWidth: strokeWidth ?? this.strokeWidth
+      strokeWidth: strokeWidth ?? this.strokeWidth,
     );
   }
 
@@ -151,40 +150,33 @@ class CircleMapObject extends Equatable implements MapObject<CircleMapObject> {
 
   @override
   Map<String, dynamic> _createJson() {
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _updateJson(MapObject previous) {
     assert(mapId == previous.mapId);
 
-    return toJson()..addAll({
-      'type': _kType
-    });
+    return toJson()..addAll({'type': _kType});
   }
 
   @override
   Map<String, dynamic> _removeJson() {
-    return {
-      'id': mapId.value,
-      'type': _kType
-    };
+    return {'id': mapId.value, 'type': _kType};
   }
 
   @override
   List<Object> get props => <Object>[
-    mapId,
-    circle,
-    isGeodesic,
-    zIndex,
-    consumeTapEvents,
-    isVisible,
-    strokeColor,
-    strokeWidth,
-    fillColor,
-  ];
+        mapId,
+        circle,
+        isGeodesic,
+        zIndex,
+        consumeTapEvents,
+        isVisible,
+        strokeColor,
+        strokeWidth,
+        fillColor,
+      ];
 
   @override
   bool get stringify => true;

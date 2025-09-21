@@ -11,7 +11,7 @@ class YandexPedestrian {
   static Future<(PedestrianSession, Future<PedestrianSessionResult>)> requestRoutes({
     required List<RequestPoint> points,
     required avoidSteep,
-    required TimeOptions timeOptions
+    required TimeOptions timeOptions,
   }) async {
     final session = await _initSession();
 
@@ -22,7 +22,7 @@ class YandexPedestrian {
   static Future<PedestrianSession> _initSession() async {
     final id = _nextId++;
 
-    await _channel.invokeMethod('initSession', { 'id': id });
+    await _channel.invokeMethod('initSession', {'id': id});
 
     return PedestrianSession._(id: id);
   }

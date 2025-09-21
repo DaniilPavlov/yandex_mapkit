@@ -2,6 +2,14 @@ part of '../../../yandex_mapkit.dart';
 
 /// Information about pedestrian route metadata.
 class PedestrianMetadata extends Equatable {
+  const PedestrianMetadata._(this.weight, this.estimation);
+
+  factory PedestrianMetadata._fromJson(Map<dynamic, dynamic> json) {
+    return PedestrianMetadata._(
+      PedestrianWeight._fromJson(json['weight']),
+      json['estimation'] != null ? PedestrianTravelEstimation._fromJson(json['estimation']) : null,
+    );
+  }
 
   /// Route "weight".
   final PedestrianWeight weight;
@@ -9,20 +17,8 @@ class PedestrianMetadata extends Equatable {
   /// Arrival and departure time estimations for time-dependent routes.
   final PedestrianTravelEstimation? estimation;
 
-  const PedestrianMetadata._(this.weight, this.estimation);
-
-  factory PedestrianMetadata._fromJson(Map<dynamic, dynamic> json) {
-    return PedestrianMetadata._(
-      PedestrianWeight._fromJson(json['weight']),
-      json['estimation'] != null ? PedestrianTravelEstimation._fromJson(json['estimation']) : null
-    );
-  }
-
   @override
-  List<Object?> get props => <Object?>[
-    weight,
-    estimation
-  ];
+  List<Object?> get props => <Object?>[weight, estimation];
 
   @override
   bool get stringify => true;
@@ -30,16 +26,6 @@ class PedestrianMetadata extends Equatable {
 
 /// Quantitative characteristics of any segment of the route.
 class PedestrianWeight extends Equatable {
-
-  /// Time to travel.
-  final LocalizedValue time;
-
-  /// The number of transfers for a route or a route section.
-  final int transfersCount;
-
-  /// Distance to travel.
-  final LocalizedValue walkingDistance;
-
   const PedestrianWeight._(this.time, this.transfersCount, this.walkingDistance);
 
   factory PedestrianWeight._fromJson(Map<dynamic, dynamic> json) {
@@ -50,12 +36,21 @@ class PedestrianWeight extends Equatable {
     );
   }
 
+  /// Time to travel.
+  final LocalizedValue time;
+
+  /// The number of transfers for a route or a route section.
+  final int transfersCount;
+
+  /// Distance to travel.
+  final LocalizedValue walkingDistance;
+
   @override
   List<Object> get props => <Object>[
-    time,
-    transfersCount,
-    walkingDistance,
-  ];
+        time,
+        transfersCount,
+        walkingDistance,
+      ];
 
   @override
   bool get stringify => true;

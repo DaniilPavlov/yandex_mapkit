@@ -2,6 +2,11 @@ part of '../../../yandex_mapkit.dart';
 
 /// Options to fine-tune suggest request.
 class SuggestOptions extends Equatable {
+  const SuggestOptions({
+    required this.suggestType,
+    this.suggestWords = true,
+    this.userPosition,
+  });
 
   /// What type of suggestions to look for
   /// If suggestType is empty, it means to use server-defined types
@@ -13,26 +18,16 @@ class SuggestOptions extends Equatable {
   /// The server uses the user position to calculate the distance from the user to suggest results.
   final Point? userPosition;
 
-  const SuggestOptions({
-    required this.suggestType,
-    this.suggestWords = true,
-    this.userPosition,
-  });
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'suggestWords': suggestWords,
       'userPosition': userPosition?.toJson(),
-      'suggestType': suggestType.index
+      'suggestType': suggestType.index,
     };
   }
 
   @override
-  List<Object?> get props => <Object?>[
-    suggestType,
-    userPosition,
-    suggestWords
-  ];
+  List<Object?> get props => <Object?>[suggestType, userPosition, suggestWords];
 
   @override
   bool get stringify => true;

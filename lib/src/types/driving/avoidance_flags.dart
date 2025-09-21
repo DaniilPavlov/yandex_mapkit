@@ -1,6 +1,17 @@
 part of '../../../yandex_mapkit.dart';
 
 final class DrivingAvoidanceFlags extends Equatable {
+  const DrivingAvoidanceFlags({
+    this.avoidTolls = false,
+    this.avoidUnpaved = false,
+    this.avoidPoorCondition = false,
+    this.avoidRailwayCrossing = false,
+    this.avoidBoatFerry = false,
+    this.avoidFordCrossing = false,
+    this.avoidTunnel = false,
+    this.avoidHighway = false,
+  });
+
   /// The 'avoidTolls' option instructs the router to return routes that
   /// avoid tolls when possible.
   final bool avoidTolls;
@@ -32,17 +43,6 @@ final class DrivingAvoidanceFlags extends Equatable {
   /// The 'avoidHighway' option instructs the router to return routes that
   /// avoid highways when possible.
   final bool avoidHighway;
-
-  const DrivingAvoidanceFlags({
-    this.avoidTolls = false,
-    this.avoidUnpaved = false,
-    this.avoidPoorCondition = false,
-    this.avoidRailwayCrossing = false,
-    this.avoidBoatFerry = false,
-    this.avoidFordCrossing = false,
-    this.avoidTunnel = false,
-    this.avoidHighway = false,
-  });
 
   @override
   List<Object?> get props => <Object?>[

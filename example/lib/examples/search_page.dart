@@ -45,22 +45,22 @@ class _SearchExampleState extends State<_SearchExample> {
                     ),
                     ControlButton(
                       onPressed: _search,
-                      title: 'Query'
+                      title: 'Query',
                     ),
                   ],
                 ),
-              ]
-            )
-          )
-        )
-      ]
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   void _search() async {
     final query = queryController.text;
 
-    print('Search query: $query');
+    debugPrint('Search query: $query');
 
     final resultWithSession = await YandexSearch.searchByText(
       searchText: query,
@@ -68,29 +68,28 @@ class _SearchExampleState extends State<_SearchExample> {
         const BoundingBox(
           southWest: Point(latitude: 55.76996383933034, longitude: 37.57483142322235),
           northEast: Point(latitude: 55.785322774728414, longitude: 37.590924677311705),
-        )
+        ),
       ),
       searchOptions: const SearchOptions(
         searchType: SearchType.geo,
         geometry: false,
       ),
     );
-
+    if (!mounted) return;
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => _SessionPage(query, resultWithSession.$1, resultWithSession.$2)
-      )
+        builder: (BuildContext context) => _SessionPage(query, resultWithSession.$1, resultWithSession.$2),
+      ),
     );
   }
 }
 
 class _SessionPage extends StatefulWidget {
+  const _SessionPage(this.query, this.session, this.result);
   final Future<SearchSessionResult> result;
   final SearchSession session;
   final String query;
-
-  const _SessionPage(this.query, this.session, this.result);
 
   @override
   _SessionState createState() => _SessionState();
@@ -135,14 +134,21 @@ class _SessionState extends State<_SessionPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(widget.query, style: const TextStyle(fontSize: 20,)),
-                          !_progress ? Container() : TextButton.icon(
-                            icon: const CircularProgressIndicator(),
-                            label: const Text('Cancel'),
-                            onPressed: _cancel
-                          )
+                          Text(
+                            widget.query,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          !_progress
+                              ? Container()
+                              : TextButton.icon(
+                                  icon: const CircularProgressIndicator(),
+                                  label: const Text('Cancel'),
+                                  onPressed: _cancel,
+                                ),
                         ],
-                      )
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -153,18 +159,18 @@ class _SessionState extends State<_SessionPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: _getList(),
-                            )
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ]
-                )
-              )
-            )
-          ]
-        )
-      )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -192,7 +198,9 @@ class _SessionState extends State<_SessionPage> {
   Future<void> _cancel() async {
     await widget.session.cancel();
 
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
   }
 
   Future<void> _close() async {
@@ -204,20 +212,26 @@ class _SessionState extends State<_SessionPage> {
   }
 
   Future<void> _handleResult(SearchSessionResult result) async {
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
 
     if (result.error != null) {
-      print('Error: ${result.error}');
+      debugPrint('Error: ${result.error}');
       return;
     }
 
-    print('Page ${result.page}: $result');
+    debugPrint('Page ${result.page}: $result');
 
-    setState(() { results.add(result); });
+    setState(() {
+      results.add(result);
+    });
 
     if (await widget.session.hasNextPage()) {
-      print('Got ${result.found} items, fetching next page...');
-      setState(() { _progress = true; });
+      debugPrint('Got ${result.found} items, fetching next page...');
+      setState(() {
+        _progress = true;
+      });
       await _handleResult(await widget.session.fetchNextPage());
     }
   }

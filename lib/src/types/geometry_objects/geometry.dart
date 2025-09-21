@@ -2,13 +2,30 @@ part of '../../../yandex_mapkit.dart';
 
 /// A geometric representation of an object on map
 class Geometry extends Equatable {
+  factory Geometry.fromBoundingBox(BoundingBox boundingBox) => Geometry._(boundingBox: boundingBox);
+  factory Geometry.fromCircle(Circle circle) => Geometry._(circle: circle);
+  factory Geometry.fromMultiPolygon(MultiPolygon multiPolygon) => Geometry._(multiPolygon: multiPolygon);
+  factory Geometry.fromPoint(Point point) => Geometry._(point: point);
+  factory Geometry.fromPolygon(Polygon polygon) => Geometry._(polygon: polygon);
+  factory Geometry.fromPolyline(Polyline polyline) => Geometry._(polyline: polyline);
+
+  factory Geometry._fromJson(Map<dynamic, dynamic> json) {
+    return Geometry._(
+      boundingBox: json['boundingBox'] != null ? BoundingBox._fromJson(json['boundingBox']) : null,
+      circle: json['circle'] != null ? Circle._fromJson(json['circle']) : null,
+      multiPolygon: json['multiPolygon'] != null ? MultiPolygon._fromJson(json['multiPolygon']) : null,
+      point: json['point'] != null ? Point._fromJson(json['point']) : null,
+      polygon: json['polygon'] != null ? Polygon._fromJson(json['polygon']) : null,
+      polyline: json['polyline'] != null ? Polyline._fromJson(json['polyline']) : null,
+    );
+  }
   const Geometry._({
     this.boundingBox,
     this.circle,
     this.multiPolygon,
     this.point,
     this.polyline,
-    this.polygon
+    this.polygon,
   });
 
   /// A rectangular box around the object.
@@ -29,22 +46,15 @@ class Geometry extends Equatable {
   /// A polyline between a number of points.
   final Polyline? polyline;
 
-  factory Geometry.fromBoundingBox(BoundingBox boundingBox) => Geometry._(boundingBox: boundingBox);
-  factory Geometry.fromCircle(Circle circle) => Geometry._(circle: circle);
-  factory Geometry.fromMultiPolygon(MultiPolygon multiPolygon) => Geometry._(multiPolygon: multiPolygon);
-  factory Geometry.fromPoint(Point point) => Geometry._(point: point);
-  factory Geometry.fromPolygon(Polygon polygon) => Geometry._(polygon: polygon);
-  factory Geometry.fromPolyline(Polyline polyline) => Geometry._(polyline: polyline);
-
   @override
   List<Object?> get props => <Object?>[
-    boundingBox,
-    circle,
-    multiPolygon,
-    point,
-    polygon,
-    polyline,
-  ];
+        boundingBox,
+        circle,
+        multiPolygon,
+        point,
+        polygon,
+        polyline,
+      ];
 
   @override
   bool get stringify => true;
@@ -58,16 +68,5 @@ class Geometry extends Equatable {
       'polygon': polygon?.toJson(),
       'polyline': polyline?.toJson(),
     };
-  }
-
-  factory Geometry._fromJson(Map<dynamic, dynamic> json) {
-    return Geometry._(
-      boundingBox: json['boundingBox'] != null ? BoundingBox._fromJson(json['boundingBox']) : null,
-      circle: json['circle'] != null ? Circle._fromJson(json['circle']) : null,
-      multiPolygon: json['multiPolygon'] != null ? MultiPolygon._fromJson(json['multiPolygon']) : null,
-      point: json['point'] != null ? Point._fromJson(json['point']) : null,
-      polygon: json['polygon'] != null ? Polygon._fromJson(json['polygon']) : null,
-      polyline: json['polyline'] != null ? Polyline._fromJson(json['polyline']) : null,
-    );
   }
 }

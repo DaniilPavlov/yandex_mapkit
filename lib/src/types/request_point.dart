@@ -10,6 +10,7 @@ part of '../../yandex_mapkit.dart';
 /// Waypoints are guaranteed to be between sections in the resulting route.
 /// Via points are embedded into sections.
 class RequestPoint extends Equatable {
+  const RequestPoint({required this.point, required this.requestPointType});
 
   /// The request point.
   final Point point;
@@ -17,33 +18,22 @@ class RequestPoint extends Equatable {
   /// The type of request point specified.
   final RequestPointType requestPointType;
 
-  const RequestPoint({
-    required this.point,
-    required this.requestPointType
-  });
-
   @override
   List<Object> get props => <Object>[
-    point,
-    requestPointType,
-  ];
+        point,
+        requestPointType,
+      ];
 
   @override
   bool get stringify => true;
 
   Map<String, dynamic> toJson() {
-    return {
-      'requestPointType': requestPointType.value,
-      'point': point.toJson()
-    };
+    return {'requestPointType': requestPointType.value, 'point': point.toJson()};
   }
 }
 
 /// The waypoint and a point the path must go through.
-enum RequestPointType {
-  wayPoint,
-  viaPoint
-}
+enum RequestPointType { wayPoint, viaPoint }
 
 extension RequestPointTypeExtension on RequestPointType {
   int get value {

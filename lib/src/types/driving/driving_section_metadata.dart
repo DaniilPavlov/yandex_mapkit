@@ -1,22 +1,20 @@
 part of '../../../yandex_mapkit.dart';
 
-
 /// Information about driving route metadata.
 class DrivingSectionMetadata extends Equatable {
-
-  /// Route "weight".
-  final DrivingWeight weight;
-
   const DrivingSectionMetadata._(this.weight);
 
   factory DrivingSectionMetadata._fromJson(Map<dynamic, dynamic> json) {
     return DrivingSectionMetadata._(DrivingWeight._fromJson(json['weight']));
   }
 
+  /// Route "weight".
+  final DrivingWeight weight;
+
   @override
   List<Object> get props => <Object>[
-    weight,
-  ];
+        weight,
+      ];
 
   @override
   bool get stringify => true;
@@ -24,16 +22,6 @@ class DrivingSectionMetadata extends Equatable {
 
 /// Quantitative characteristics of any segment of the route.
 class DrivingWeight extends Equatable {
-
-  /// Time to travel, not considering traffic.
-  final LocalizedValue time;
-
-  /// Time to travel, considering traffic.
-  final LocalizedValue timeWithTraffic;
-
-  /// Distance to travel.
-  final LocalizedValue distance;
-
   const DrivingWeight._(this.time, this.timeWithTraffic, this.distance);
 
   factory DrivingWeight._fromJson(Map<dynamic, dynamic> json) {
@@ -44,12 +32,21 @@ class DrivingWeight extends Equatable {
     );
   }
 
+  /// Time to travel, not considering traffic.
+  final LocalizedValue time;
+
+  /// Time to travel, considering traffic.
+  final LocalizedValue timeWithTraffic;
+
+  /// Distance to travel.
+  final LocalizedValue distance;
+
   @override
   List<Object> get props => <Object>[
-    time,
-    timeWithTraffic,
-    distance,
-  ];
+        time,
+        timeWithTraffic,
+        distance,
+      ];
 
   @override
   bool get stringify => true;

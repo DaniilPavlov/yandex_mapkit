@@ -2,14 +2,12 @@ part of '../../../yandex_mapkit.dart';
 
 /// Defines a started search request
 class SearchSession {
+  SearchSession._({required this.id}) : _methodChannel = MethodChannel(_methodChannelName + id.toString());
   static const String _methodChannelName = 'yandex_mapkit/yandex_search_session_';
   final MethodChannel _methodChannel;
 
   /// Unique session identifier
   final int id;
-
-  SearchSession._({required this.id}) :
-    _methodChannel = MethodChannel(_methodChannelName + id.toString());
 
   /// Cancels running search request if there is one
   Future<void> cancel() async {
@@ -47,7 +45,7 @@ class SearchSession {
   Future<SearchSessionResult> _searchByText({
     required String searchText,
     required Geometry geometry,
-    required SearchOptions searchOptions
+    required SearchOptions searchOptions,
   }) async {
     final params = <String, dynamic>{
       'searchText': searchText,
@@ -64,7 +62,7 @@ class SearchSession {
   Future<SearchSessionResult> _searchByPoint({
     required Point point,
     int? zoom,
-    required SearchOptions searchOptions
+    required SearchOptions searchOptions,
   }) async {
     final params = <String, dynamic>{
       'point': point.toJson(),
@@ -81,6 +79,17 @@ class SearchSession {
 /// Result of a search request
 /// If any errors have occured then [items], [found], [page] will be empty, otherwise [error] will be empty
 class SearchSessionResult {
+  SearchSessionResult._(this.found, this.items, this.page, this.error);
+
+  factory SearchSessionResult._fromJson(Map<dynamic, dynamic> json) {
+    return SearchSessionResult._(
+      json['found'],
+      // ignore: avoid_dynamic_calls
+      json['items']?.map<SearchItem>((dynamic item) => SearchItem._fromJson(item)).toList(),
+      json['page'],
+      json['error'],
+    );
+  }
 
   /// Total count of found items
   final int? found;
@@ -93,20 +102,4 @@ class SearchSessionResult {
 
   /// Error message
   String? error;
-
-  SearchSessionResult._(
-    this.found,
-    this.items,
-    this.page,
-    this.error
-  );
-
-  factory SearchSessionResult._fromJson(Map<dynamic, dynamic> json) {
-    return SearchSessionResult._(
-      json['found'],
-      json['items']?.map<SearchItem>((dynamic item) => SearchItem._fromJson(item)).toList(),
-      json['page'],
-      json['error']
-    );
-  }
 }

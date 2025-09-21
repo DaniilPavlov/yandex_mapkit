@@ -10,7 +10,7 @@ class YandexDriving {
   /// Builds a route.
   static Future<(DrivingSession, Future<DrivingSessionResult>)> requestRoutes({
     required List<RequestPoint> points,
-    required DrivingOptions drivingOptions
+    required DrivingOptions drivingOptions,
   }) async {
     final session = await _initSession();
 
@@ -21,7 +21,7 @@ class YandexDriving {
   static Future<DrivingSession> _initSession() async {
     final id = _nextId++;
 
-    await _channel.invokeMethod('initSession', { 'id': id });
+    await _channel.invokeMethod('initSession', {'id': id});
 
     return DrivingSession._(id: id);
   }

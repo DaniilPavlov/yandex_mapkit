@@ -11,7 +11,7 @@ class YandexSuggest {
   static Future<(SuggestSession, Future<SuggestSessionResult>)> getSuggestions({
     required String text,
     required BoundingBox boundingBox,
-    required SuggestOptions suggestOptions
+    required SuggestOptions suggestOptions,
   }) async {
     final session = await _initSession();
 
@@ -22,7 +22,7 @@ class YandexSuggest {
   static Future<SuggestSession> _initSession() async {
     final id = _nextId++;
 
-    await _channel.invokeMethod('initSession', { 'id': id });
+    await _channel.invokeMethod('initSession', {'id': id});
 
     return SuggestSession._(id: id);
   }

@@ -3,10 +3,14 @@ part of '../../../yandex_mapkit.dart';
 /// A polygon with one or more polygons in it.
 /// The exterior and interior areas are specified using LinearRing.
 class Polygon extends Equatable {
-  const Polygon({
-    required this.outerRing,
-    required this.innerRings
-  });
+  factory Polygon._fromJson(Map<dynamic, dynamic> json) {
+    return Polygon(
+      outerRing: LinearRing._fromJson(json['outerRing']),
+      // ignore: avoid_dynamic_calls
+      innerRings: json['innerRings'].map<LinearRing>((el) => LinearRing._fromJson(el)).toList(),
+    );
+  }
+  const Polygon({required this.outerRing, required this.innerRings});
 
   /// The ring specifying the area.
   final LinearRing outerRing;
@@ -15,25 +19,12 @@ class Polygon extends Equatable {
   final List<LinearRing> innerRings;
 
   @override
-  List<Object> get props => <Object>[
-    outerRing,
-    innerRings
-  ];
+  List<Object> get props => <Object>[outerRing, innerRings];
 
   @override
   bool get stringify => true;
 
   Map<String, dynamic> toJson() {
-    return {
-      'outerRing': outerRing.toJson(),
-      'innerRings': innerRings.map((LinearRing lr) => lr.toJson()).toList()
-    };
-  }
-
-  factory Polygon._fromJson(Map<dynamic, dynamic> json) {
-    return Polygon(
-      outerRing: LinearRing._fromJson(json['outerRing']),
-      innerRings: json['innerRings'].map<LinearRing>((el) => LinearRing._fromJson(el)).toList()
-    );
+    return {'outerRing': outerRing.toJson(), 'innerRings': innerRings.map((LinearRing lr) => lr.toJson()).toList()};
   }
 }

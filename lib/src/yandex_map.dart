@@ -37,7 +37,7 @@ class YandexMap extends StatefulWidget {
     this.mapType = MapType.vector,
     this.poiLimit,
     this.onObjectTap,
-    this.cameraBounds = const CameraBounds()
+    this.cameraBounds = const CameraBounds(),
   });
 
   static const String _viewType = 'yandex_mapkit/yandex_map';
@@ -131,10 +131,8 @@ class _YandexMapState extends State<YandexMap> {
   late _YandexMapOptions _yandexMapOptions;
 
   /// Root object which contains all [MapObject] which were added to the map by user
-  MapObjectCollection _mapObjectCollection = MapObjectCollection(
-    mapId: const MapObjectId('root_map_object_collection'),
-    mapObjects: const []
-  );
+  MapObjectCollection _mapObjectCollection =
+      MapObjectCollection(mapId: const MapObjectId('root_map_object_collection'), mapObjects: const []);
 
   /// All [MapObject] which were created natively
   ///
@@ -219,10 +217,10 @@ class _YandexMapState extends State<YandexMap> {
               creationParamsCodec: const StandardMessageCodec(),
               onFocus: () => params.onFocusChanged(true),
             )
-            ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-            ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
-            ..create();
-          }
+              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+              ..addOnPlatformViewCreatedListener(_onPlatformViewCreated)
+              ..create();
+          },
         );
       } else {
         return AndroidView(
@@ -256,33 +254,28 @@ class _YandexMapState extends State<YandexMap> {
 
   Map<String, dynamic> _creationParams() {
     final mapOptions = _yandexMapOptions.toJson();
-    final mapObjects = MapObjectUpdates.from(
-      {_mapObjectCollection.copyWith(mapObjects: [])},
-      {_mapObjectCollection}
-    ).toJson();
+    final mapObjects =
+        MapObjectUpdates.from({_mapObjectCollection.copyWith(mapObjects: [])}, {_mapObjectCollection}).toJson();
 
-    return {
-      'mapOptions': mapOptions,
-      'mapObjects': mapObjects
-    };
+    return {'mapOptions': mapOptions, 'mapObjects': mapObjects};
   }
 }
 
 /// Configuration options for the YandexMap native view.
 class _YandexMapOptions {
-  _YandexMapOptions.fromWidget(YandexMap map) :
-    tiltGesturesEnabled = map.tiltGesturesEnabled,
-    zoomGesturesEnabled = map.zoomGesturesEnabled,
-    rotateGesturesEnabled = map.rotateGesturesEnabled,
-    scrollGesturesEnabled = map.scrollGesturesEnabled,
-    nightModeEnabled = map.nightModeEnabled,
-    fastTapEnabled = map.fastTapEnabled,
-    mode2DEnabled = map.mode2DEnabled,
-    logoAlignment = map.logoAlignment,
-    focusRect = map.focusRect,
-    mapType = map.mapType,
-    poiLimit = map.poiLimit,
-    cameraBounds = map.cameraBounds;
+  _YandexMapOptions.fromWidget(YandexMap map)
+      : tiltGesturesEnabled = map.tiltGesturesEnabled,
+        zoomGesturesEnabled = map.zoomGesturesEnabled,
+        rotateGesturesEnabled = map.rotateGesturesEnabled,
+        scrollGesturesEnabled = map.scrollGesturesEnabled,
+        nightModeEnabled = map.nightModeEnabled,
+        fastTapEnabled = map.fastTapEnabled,
+        mode2DEnabled = map.mode2DEnabled,
+        logoAlignment = map.logoAlignment,
+        focusRect = map.focusRect,
+        mapType = map.mapType,
+        poiLimit = map.poiLimit,
+        cameraBounds = map.cameraBounds;
 
   final bool tiltGesturesEnabled;
 
@@ -321,18 +314,17 @@ class _YandexMapOptions {
       'focusRect': focusRect?.toJson(),
       'mapType': mapType.index,
       'poiLimit': poiLimit,
-      'cameraBounds': cameraBounds.toJson()
+      'cameraBounds': cameraBounds.toJson(),
     };
   }
 
   Map<String, dynamic> mapUpdates(_YandexMapOptions newOptions) {
     final prevOptionsMap = toJson();
 
-    return newOptions.toJson()..removeWhere(
-      (String key, dynamic value) {
+    return newOptions.toJson()
+      ..removeWhere((String key, dynamic value) {
         if (value is Map) return mapEquals(prevOptionsMap[key], value);
         return prevOptionsMap[key] == value;
-      }
-    );
+      });
   }
 }

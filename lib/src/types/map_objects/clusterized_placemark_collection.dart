@@ -5,8 +5,6 @@ part of '../../../yandex_mapkit.dart';
 /// Depending on distance from each other and current zoom level
 /// can be grouped into a single or multiple [Cluster]
 class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
-  static const _kType = 'ClusterizedPlacemarkCollection';
-
   ClusterizedPlacemarkCollection({
     required this.mapId,
     required List<PlacemarkMapObject> placemarks,
@@ -17,11 +15,13 @@ class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
     this.onClusterAdded,
     this.onClusterTap,
     this.consumeTapEvents = false,
-    this.isVisible = true
-  }) : placemarks = List.unmodifiable(placemarks.groupFoldBy<MapObjectId, PlacemarkMapObject>(
-      (element) => element.mapId,
-      (previous, element) => element
-    ).values);
+    this.isVisible = true,
+  }) : placemarks = List.unmodifiable(
+          placemarks
+              .groupFoldBy<MapObjectId, PlacemarkMapObject>((element) => element.mapId, (previous, element) => element)
+              .values,
+        );
+  static const _kType = 'ClusterizedPlacemarkCollection';
 
   /// List of [PlacemarkMapObject] eligible for clusterization.
   ///
@@ -74,7 +74,7 @@ class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
     ClusterCallback? onClusterAdded,
     ClusterCallback? onClusterTap,
     bool? consumeTapEvents,
-    bool? isVisible
+    bool? isVisible,
   }) {
     return ClusterizedPlacemarkCollection(
       mapId: mapId,
@@ -86,7 +86,7 @@ class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
       onClusterAdded: onClusterAdded ?? this.onClusterAdded,
       onClusterTap: onClusterTap ?? this.onClusterTap,
       consumeTapEvents: consumeTapEvents ?? this.consumeTapEvents,
-      isVisible: isVisible ?? this.isVisible
+      isVisible: isVisible ?? this.isVisible,
     );
   }
 
@@ -122,7 +122,7 @@ class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
       onClusterAdded: onClusterAdded,
       onClusterTap: onClusterTap,
       consumeTapEvents: consumeTapEvents,
-      isVisible: isVisible
+      isVisible: isVisible,
     );
   }
 
@@ -163,50 +163,45 @@ class ClusterizedPlacemarkCollection extends Equatable implements MapObject {
       'placemarks': placemarks.map((PlacemarkMapObject p) => p.toJson()).toList(),
       'zIndex': zIndex,
       'consumeTapEvents': consumeTapEvents,
-      'isVisible': isVisible
+      'isVisible': isVisible,
     };
   }
 
   @override
   Map<String, dynamic> _createJson() {
-    return toJson()..addAll({
-      'type': _kType,
-      'placemarks': MapObjectUpdates.from(
-        const <PlacemarkMapObject>{...[]},
-        placemarks.toSet()
-      ).toJson()
-    });
+    return toJson()
+      ..addAll({
+        'type': _kType,
+        'placemarks': MapObjectUpdates.from(const <PlacemarkMapObject>{...[]}, placemarks.toSet()).toJson(),
+      });
   }
 
   @override
   Map<String, dynamic> _updateJson(MapObject previous) {
     assert(mapId == previous.mapId);
 
-    return toJson()..addAll({
-      'type': _kType,
-      'placemarks': MapObjectUpdates.from(
-        (previous as ClusterizedPlacemarkCollection).placemarks.toSet(),
-        placemarks.toSet()
-      ).toJson()
-    });
+    return toJson()
+      ..addAll({
+        'type': _kType,
+        'placemarks':
+            MapObjectUpdates.from((previous as ClusterizedPlacemarkCollection).placemarks.toSet(), placemarks.toSet())
+                .toJson(),
+      });
   }
 
   @override
   Map<String, dynamic> _removeJson() {
-    return {
-      'id': mapId.value,
-      'type': _kType
-    };
+    return {'id': mapId.value, 'type': _kType};
   }
 
   @override
   List<Object> get props => <Object>[
-    mapId,
-    placemarks,
-    zIndex,
-    consumeTapEvents,
-    isVisible,
-  ];
+        mapId,
+        placemarks,
+        zIndex,
+        consumeTapEvents,
+        isVisible,
+      ];
 
   @override
   bool get stringify => true;

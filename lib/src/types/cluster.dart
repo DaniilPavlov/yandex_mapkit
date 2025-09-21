@@ -6,7 +6,7 @@ class Cluster extends Equatable {
   const Cluster._({
     required this.size,
     required this.appearance,
-    required this.placemarks
+    required this.placemarks,
   });
 
   /// Placemarks from [ClusterizedPlacemarkCollection] in this cluster
@@ -20,21 +20,21 @@ class Cluster extends Equatable {
 
   /// Returns a copy of [Cluster] with new appearance
   Cluster copyWith({
-    PlacemarkMapObject? appearance
+    PlacemarkMapObject? appearance,
   }) {
     return Cluster._(
       size: size,
       appearance: appearance ?? this.appearance,
-      placemarks: placemarks
+      placemarks: placemarks,
     );
   }
 
   @override
   List<Object> get props => <Object>[
-    size,
-    appearance,
-    placemarks
-  ];
+        size,
+        appearance,
+        placemarks,
+      ];
 
   @override
   bool get stringify => true;
@@ -43,7 +43,7 @@ class Cluster extends Equatable {
     return {
       'size': size,
       'appearance': appearance.toJson(),
-      'placemarks': placemarks.map((e) => e.toJson())
+      'placemarks': placemarks.map((e) => e.toJson()),
     };
   }
 }

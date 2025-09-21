@@ -4,7 +4,7 @@ class ControlButton extends StatelessWidget {
   const ControlButton({
     super.key,
     required this.onPressed,
-    required this.title
+    required this.title,
   });
 
   final VoidCallback onPressed;

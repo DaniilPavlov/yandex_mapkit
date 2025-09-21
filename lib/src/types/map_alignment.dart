@@ -15,9 +15,9 @@ class MapAlignment extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    horizontal,
-    vertical,
-  ];
+        horizontal,
+        vertical,
+      ];
 
   @override
   bool get stringify => true;
@@ -25,20 +25,13 @@ class MapAlignment extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'horizontal': horizontal.index,
-      'vertical': vertical.index
+      'vertical': vertical.index,
     };
   }
 }
 
 /// Horizontal logo alignment.
-enum HorizontalAlignment {
-  left,
-  center,
-  right
-}
+enum HorizontalAlignment { left, center, right }
 
 /// Vertical logo alignment.
-enum VerticalAlignment {
-  top,
-  bottom
-}
+enum VerticalAlignment { top, bottom }

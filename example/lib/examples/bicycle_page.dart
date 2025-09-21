@@ -24,28 +24,28 @@ class _BicycleExampleState extends State<_BicycleExample> {
   late final List<MapObject> mapObjects = [
     startPlacemark,
     stopByPlacemark,
-    endPlacemark
+    endPlacemark,
   ];
   final PlacemarkMapObject startPlacemark = PlacemarkMapObject(
     mapId: const MapObjectId('start_placemark'),
     point: const Point(latitude: 55.7558, longitude: 37.6173),
     icon: PlacemarkIcon.single(
-      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_start.png'))
+      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_start.png')),
     ),
   );
   final PlacemarkMapObject stopByPlacemark = PlacemarkMapObject(
     mapId: const MapObjectId('stop_by_placemark'),
     point: const Point(latitude: 55.755173, longitude: 37.619097),
     icon: PlacemarkIcon.single(
-      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_stop_by.png'))
+      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_stop_by.png')),
     ),
   );
   final PlacemarkMapObject endPlacemark = PlacemarkMapObject(
     mapId: const MapObjectId('end_placemark'),
     point: const Point(latitude: 55.7558, longitude: 37.62),
     icon: PlacemarkIcon.single(
-      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_end.png'))
-    )
+      PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/route_end.png')),
+    ),
   );
 
   @override
@@ -58,15 +58,17 @@ class _BicycleExampleState extends State<_BicycleExample> {
           child: YandexMap(
             mapObjects: mapObjects,
             onMapCreated: (YandexMapController yandexMapController) async {
-              final geometry = Geometry.fromBoundingBox(BoundingBox(
-                northEast: startPlacemark.point,
-                southWest: endPlacemark.point
-              ));
+              final geometry = Geometry.fromBoundingBox(
+                BoundingBox(
+                  northEast: startPlacemark.point,
+                  southWest: endPlacemark.point,
+                ),
+              );
 
               await yandexMapController.moveCamera(CameraUpdate.newGeometry(geometry));
               await yandexMapController.moveCamera(CameraUpdate.zoomOut());
             },
-          )
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -77,16 +79,16 @@ class _BicycleExampleState extends State<_BicycleExample> {
                   onPressed: _requestRoutes,
                   title: 'Build route',
                 ),
-              ]
-            )
-          )
-        )
-      ]
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Future<void> _requestRoutes() async {
-    print('Points: ${startPlacemark.point},${stopByPlacemark.point},${endPlacemark.point}');
+    debugPrint('Points: ${startPlacemark.point},${stopByPlacemark.point},${endPlacemark.point}');
 
     var resultWithSession = await YandexBicycle.requestRoutes(
       bicycleVehicleType: BicycleVehicleType.bicycle,
@@ -94,9 +96,9 @@ class _BicycleExampleState extends State<_BicycleExample> {
         RequestPoint(point: startPlacemark.point, requestPointType: RequestPointType.wayPoint),
         RequestPoint(point: stopByPlacemark.point, requestPointType: RequestPointType.viaPoint),
         RequestPoint(point: endPlacemark.point, requestPointType: RequestPointType.wayPoint),
-      ]
+      ],
     );
-
+    if (!mounted) return;
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -104,20 +106,19 @@ class _BicycleExampleState extends State<_BicycleExample> {
           startPlacemark,
           endPlacemark,
           resultWithSession.$1,
-          resultWithSession.$2
-        )
-      )
+          resultWithSession.$2,
+        ),
+      ),
     );
   }
 }
 
 class _SessionPage extends StatefulWidget {
+  const _SessionPage(this.startPlacemark, this.endPlacemark, this.session, this.result);
   final Future<BicycleSessionResult> result;
   final BicycleSession session;
   final PlacemarkMapObject startPlacemark;
   final PlacemarkMapObject endPlacemark;
-
-  const _SessionPage(this.startPlacemark, this.endPlacemark, this.session, this.result);
 
   @override
   _SessionState createState() => _SessionState();
@@ -126,7 +127,7 @@ class _SessionPage extends StatefulWidget {
 class _SessionState extends State<_SessionPage> {
   late final List<MapObject> mapObjects = [
     widget.startPlacemark,
-    widget.endPlacemark
+    widget.endPlacemark,
   ];
 
   final List<BicycleSessionResult> results = [];
@@ -165,10 +166,12 @@ class _SessionState extends State<_SessionPage> {
                   YandexMap(
                     mapObjects: mapObjects,
                     onMapCreated: (YandexMapController yandexMapController) async {
-                      final geometry = Geometry.fromBoundingBox(BoundingBox(
-                        northEast: widget.startPlacemark.point,
-                        southWest: widget.endPlacemark.point
-                      ));
+                      final geometry = Geometry.fromBoundingBox(
+                        BoundingBox(
+                          northEast: widget.startPlacemark.point,
+                          southWest: widget.endPlacemark.point,
+                        ),
+                      );
 
                       await yandexMapController.moveCamera(CameraUpdate.newGeometry(geometry));
                       await yandexMapController.moveCamera(CameraUpdate.zoomOut());
@@ -188,13 +191,15 @@ class _SessionState extends State<_SessionPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          !_progress ? Container() : TextButton.icon(
-                            icon: const CircularProgressIndicator(),
-                            label: const Text('Cancel'),
-                            onPressed: _cancel
-                          )
+                          !_progress
+                              ? Container()
+                              : TextButton.icon(
+                                  icon: const CircularProgressIndicator(),
+                                  label: const Text('Cancel'),
+                                  onPressed: _cancel,
+                                ),
                         ],
-                      )
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -205,18 +210,18 @@ class _SessionState extends State<_SessionPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: _getList(),
-                            )
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ]
-                )
-              )
-            )
-          ]
-        )
-      )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -243,7 +248,9 @@ class _SessionState extends State<_SessionPage> {
   Future<void> _cancel() async {
     await widget.session.cancel();
 
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
   }
 
   Future<void> _close() async {
@@ -255,22 +262,28 @@ class _SessionState extends State<_SessionPage> {
   }
 
   Future<void> _handleResult(BicycleSessionResult result) async {
-    setState(() { _progress = false; });
+    setState(() {
+      _progress = false;
+    });
 
     if (result.error != null) {
-      print('Error: ${result.error}');
+      debugPrint('Error: ${result.error}');
       return;
     }
 
-    setState(() { results.add(result); });
+    setState(() {
+      results.add(result);
+    });
     setState(() {
       result.routes!.asMap().forEach((i, route) {
-        mapObjects.add(PolylineMapObject(
-          mapId: MapObjectId('route_${i}_polyline'),
-          polyline: route.geometry,
-          strokeColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-          strokeWidth: 3,
-        ));
+        mapObjects.add(
+          PolylineMapObject(
+            mapId: MapObjectId('route_${i}_polyline'),
+            polyline: route.geometry,
+            strokeColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+            strokeWidth: 3,
+          ),
+        );
       });
     });
   }

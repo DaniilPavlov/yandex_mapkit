@@ -45,20 +45,18 @@ class _UserLayerExampleState extends State<_UserLayerExample> {
               return view.copyWith(
                 pin: view.pin.copyWith(
                   icon: PlacemarkIcon.single(
-                    PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/user.png'))
-                  )
+                    PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/user.png')),
+                  ),
                 ),
                 arrow: view.arrow.copyWith(
                   icon: PlacemarkIcon.single(
-                    PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/arrow.png'))
-                  )
+                    PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/arrow.png')),
+                  ),
                 ),
-                accuracyCircle: view.accuracyCircle.copyWith(
-                  fillColor: Colors.green.withValues(alpha:0.5)
-                )
+                accuracyCircle: view.accuracyCircle.copyWith(fillColor: Colors.green.withValues(alpha: 0.5)),
               );
             },
-          )
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -74,21 +72,20 @@ class _UserLayerExampleState extends State<_UserLayerExample> {
                           _showMessage(const Text('Location permission was NOT granted'));
                           return;
                         }
-
+                        if (!context.mounted) return;
                         final mediaQuery = MediaQuery.of(context);
                         final height = mapKey.currentContext!.size!.height * mediaQuery.devicePixelRatio;
                         final width = mapKey.currentContext!.size!.width * mediaQuery.devicePixelRatio;
-
                         await controller.toggleUserLayer(
                           visible: true,
                           autoZoomEnabled: true,
                           anchor: UserLocationAnchor(
                             course: Offset(0.5 * width, 0.5 * height),
-                            normal: Offset(0.5 * width, 0.5 * height)
-                          )
+                            normal: Offset(0.5 * width, 0.5 * height),
+                          ),
                         );
                       },
-                      title:'Show user layer'
+                      title: 'Show user layer',
                     ),
                     ControlButton(
                       onPressed: () async {
@@ -99,8 +96,8 @@ class _UserLayerExampleState extends State<_UserLayerExample> {
 
                         await controller.toggleUserLayer(visible: false);
                       },
-                      title:'Hide user layer'
-                    )
+                      title: 'Hide user layer',
+                    ),
                   ],
                 ),
                 Row(
@@ -113,17 +110,17 @@ class _UserLayerExampleState extends State<_UserLayerExample> {
                           return;
                         }
 
-                        print(await controller.getUserCameraPosition());
+                        debugPrint((await controller.getUserCameraPosition()).toString());
                       },
-                      title: 'Get user camera position'
-                    )
+                      title: 'Get user camera position',
+                    ),
                   ],
-                )
-              ]
-            )
-          )
-        )
-      ]
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -6,8 +6,12 @@ part of '../../../yandex_mapkit.dart';
 /// The first and last points of the ring must be in the same position.
 /// The ring must not intersect with itself.
 class LinearRing extends Equatable {
-   const LinearRing({
-    required this.points
+  factory LinearRing._fromJson(Map<dynamic, dynamic> json) {
+    // ignore: avoid_dynamic_calls
+    return LinearRing(points: json['points'].map<Point>((el) => Point._fromJson(el)).toList());
+  }
+  const LinearRing({
+    required this.points,
   });
 
   /// The list of points to connect.
@@ -15,19 +19,15 @@ class LinearRing extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    points
-  ];
+        points,
+      ];
 
   @override
   bool get stringify => true;
 
   Map<String, dynamic> toJson() {
     return {
-      'points': points.map((Point p) => p.toJson()).toList()
+      'points': points.map((Point p) => p.toJson()).toList(),
     };
-  }
-
-  factory LinearRing._fromJson(Map<dynamic, dynamic> json) {
-    return LinearRing(points: json['points'].map<Point>((el) => Point._fromJson(el)).toList());
   }
 }

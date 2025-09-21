@@ -9,7 +9,7 @@ class SuggestItem extends Equatable {
     required this.searchText,
     required this.type,
     required this.tags,
-    required this.center
+    required this.center,
   });
 
   factory SuggestItem._fromJson(Map<dynamic, dynamic> json) {
@@ -20,7 +20,7 @@ class SuggestItem extends Equatable {
       searchText: json['searchText'],
       type: SuggestItemType.values[json['type']],
       tags: (json['tags'] as List<Object?>).cast<String>(),
-      center: json['center'] != null ? Point._fromJson(json['center']) : null
+      center: json['center'] != null ? Point._fromJson(json['center']) : null,
     );
   }
 
@@ -51,21 +51,16 @@ class SuggestItem extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[
-    title,
-    subtitle,
-    searchText,
-    type,
-    tags,
-    center
-  ];
+        title,
+        subtitle,
+        searchText,
+        type,
+        tags,
+        center,
+      ];
 
   @override
   bool get stringify => true;
 }
 
-enum SuggestItemType {
-  unknown,
-  toponym,
-  business,
-  transit
-}
+enum SuggestItemType { unknown, toponym, business, transit }

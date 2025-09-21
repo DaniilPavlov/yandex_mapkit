@@ -8,8 +8,8 @@ class MapObjectId extends Equatable {
 
   @override
   List<Object> get props => <Object>[
-    value
-  ];
+        value,
+      ];
 
   @override
   bool get stringify => true;

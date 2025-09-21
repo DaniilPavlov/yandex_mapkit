@@ -4,6 +4,11 @@ part of '../../../yandex_mapkit.dart';
 /// A route consists of multiple sections
 /// Each section has a corresponding annotation that describes the action at the beginning of the section.
 class PedestrianRoute extends Equatable {
+  const PedestrianRoute._(this.geometry, this.metadata);
+
+  factory PedestrianRoute._fromJson(Map<dynamic, dynamic> json) {
+    return PedestrianRoute._(Polyline._fromJson(json['geometry']), PedestrianMetadata._fromJson(json['metadata']));
+  }
 
   /// Route geometry.
   final Polyline geometry;
@@ -11,20 +16,8 @@ class PedestrianRoute extends Equatable {
   /// The route metadata.
   final PedestrianMetadata metadata;
 
-  const PedestrianRoute._(this.geometry, this.metadata);
-
-  factory PedestrianRoute._fromJson(Map<dynamic, dynamic> json) {
-    return PedestrianRoute._(
-      Polyline._fromJson(json['geometry']),
-      PedestrianMetadata._fromJson(json['metadata'])
-    );
-  }
-
   @override
-  List<Object> get props => <Object>[
-    geometry,
-    metadata
-  ];
+  List<Object> get props => <Object>[geometry, metadata];
 
   @override
   bool get stringify => true;

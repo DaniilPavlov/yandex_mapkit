@@ -1,14 +1,12 @@
 part of '../../../yandex_mapkit.dart';
 
 class BicycleSession {
+  BicycleSession._({required this.id}) : _methodChannel = MethodChannel(_methodChannelName + id.toString());
   static const String _methodChannelName = 'yandex_mapkit/yandex_bicycle_session_';
   final MethodChannel _methodChannel;
 
   /// Unique session identifier
   final int id;
-
-  BicycleSession._({required this.id}) :
-    _methodChannel = MethodChannel(_methodChannelName + id.toString());
 
   /// Retries current session
   Future<void> retry() async {
@@ -27,7 +25,7 @@ class BicycleSession {
 
   Future<BicycleSessionResult> _requestRoutes({
     required List<RequestPoint> points,
-    required BicycleVehicleType bicycleVehicleType
+    required BicycleVehicleType bicycleVehicleType,
   }) async {
     final params = <String, dynamic>{
       'bicycleVehicleType': bicycleVehicleType.index,
@@ -42,18 +40,19 @@ class BicycleSession {
 /// Result of a request to build routes
 /// If any error has occured then [routes] will be empty, otherwise [error] will be empty
 class BicycleSessionResult {
+  BicycleSessionResult._(this.routes, this.error);
+
+  factory BicycleSessionResult._fromJson(Map<dynamic, dynamic> json) {
+    return BicycleSessionResult._(
+      // ignore: avoid_dynamic_calls
+      json['routes']?.map<BicycleRoute>((dynamic route) => BicycleRoute._fromJson(route)).toList(),
+      json['error'],
+    );
+  }
+
   /// Calculated routes
   final List<BicycleRoute>? routes;
 
   /// Error message
   final String? error;
-
-  BicycleSessionResult._(this.routes, this.error);
-
-  factory BicycleSessionResult._fromJson(Map<dynamic, dynamic> json) {
-    return BicycleSessionResult._(
-      json['routes']?.map<BicycleRoute>((dynamic route) => BicycleRoute._fromJson(route)).toList(),
-      json['error']
-    );
-  }
 }

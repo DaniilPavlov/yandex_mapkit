@@ -53,7 +53,7 @@ class _TrafficLayerExampleState extends State<_TrafficLayerExample> {
                     level = trafficLevel?.level ?? 0;
                     trafficColor = trafficLevel != null ? _colorFromTraffic(trafficLevel.color) : Colors.white;
                   });
-                }
+                },
               ),
               SizedBox(
                 width: 28,
@@ -62,12 +62,12 @@ class _TrafficLayerExampleState extends State<_TrafficLayerExample> {
                   padding: const EdgeInsets.all(2),
                   child: Container(
                     decoration: BoxDecoration(shape: BoxShape.circle, color: trafficColor),
-                    child: Center(child: Text(level.toString()))
+                    child: Center(child: Text(level.toString())),
                   ),
                 ),
-              )
-            ]
-          )
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -81,21 +81,21 @@ class _TrafficLayerExampleState extends State<_TrafficLayerExample> {
                       onPressed: () async {
                         await controller.toggleTrafficLayer(visible: true);
                       },
-                      title:'Show traffic layer'
+                      title:'Show traffic layer',
                     ),
                     ControlButton(
                       onPressed: () async {
                         await controller.toggleTrafficLayer(visible: false);
                       },
-                      title:'Hide traffic layer'
-                    )
+                      title:'Hide traffic layer',
+                    ),
                   ],
-                )
-              ]
-            )
-          )
-        )
-      ]
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

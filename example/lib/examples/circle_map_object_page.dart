@@ -33,8 +33,8 @@ class _CircleMapObjectExampleState extends State<_CircleMapObjectExample> {
       children: <Widget>[
         Expanded(
           child: YandexMap(
-            mapObjects: mapObjects
-          )
+            mapObjects: mapObjects,
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -54,19 +54,19 @@ class _CircleMapObjectExampleState extends State<_CircleMapObjectExample> {
                           mapId: mapObjectId,
                           circle: const Circle(
                             center: Point(latitude: 55.781863, longitude: 37.451159),
-                            radius: 1000000
+                            radius: 1000000,
                           ),
                           strokeColor: Colors.blue[700]!,
                           strokeWidth: 5,
                           fillColor: Colors.blue[300]!,
-                          onTap: (CircleMapObject self, Point point) => print('Tapped me at $point'),
+                          onTap: (CircleMapObject self, Point point) => debugPrint('Tapped me at $point'),
                         );
 
                         setState(() {
                           mapObjects.add(mapObject);
                         });
                       },
-                      title: 'Add'
+                      title: 'Add',
                     ),
                     ControlButton(
                       onPressed: () async {
@@ -81,7 +81,7 @@ class _CircleMapObjectExampleState extends State<_CircleMapObjectExample> {
                           );
                         });
                       },
-                      title: 'Update'
+                      title: 'Update',
                     ),
                     ControlButton(
                       onPressed: () async {
@@ -89,15 +89,15 @@ class _CircleMapObjectExampleState extends State<_CircleMapObjectExample> {
                           mapObjects.removeWhere((el) => el.mapId == mapObjectId);
                         });
                       },
-                      title: 'Remove'
-                    )
+                      title: 'Remove',
+                    ),
                   ],
-                )
-              ]
-            )
-          )
-        )
-      ]
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

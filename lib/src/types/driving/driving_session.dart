@@ -1,14 +1,12 @@
 part of '../../../yandex_mapkit.dart';
 
 class DrivingSession {
+  DrivingSession._({required this.id}) : _methodChannel = MethodChannel(_methodChannelName + id.toString());
   static const String _methodChannelName = 'yandex_mapkit/yandex_driving_session_';
   final MethodChannel _methodChannel;
 
   /// Unique session identifier
   final int id;
-
-  DrivingSession._({required this.id}) :
-    _methodChannel = MethodChannel(_methodChannelName + id.toString());
 
   /// Retries current session
   Future<void> retry() async {
@@ -27,11 +25,11 @@ class DrivingSession {
 
   Future<DrivingSessionResult> _requestRoutes({
     required List<RequestPoint> points,
-    required DrivingOptions drivingOptions
+    required DrivingOptions drivingOptions,
   }) async {
     final params = <String, dynamic>{
       'points': points.map((RequestPoint requestPoint) => requestPoint.toJson()).toList(),
-      'drivingOptions': drivingOptions.toJson()
+      'drivingOptions': drivingOptions.toJson(),
     };
 
     final result = await _methodChannel.invokeMethod('requestRoutes', params);
@@ -43,18 +41,19 @@ class DrivingSession {
 /// Result of a request to build routes
 /// If any error has occured then [routes] will be empty, otherwise [error] will be empty
 class DrivingSessionResult {
+  DrivingSessionResult._(this.routes, this.error);
+
+  factory DrivingSessionResult._fromJson(Map<dynamic, dynamic> json) {
+    return DrivingSessionResult._(
+      // ignore: avoid_dynamic_calls
+      json['routes']?.map<DrivingRoute>((dynamic route) => DrivingRoute._fromJson(route)).toList(),
+      json['error'],
+    );
+  }
+
   /// Calculated routes
   final List<DrivingRoute>? routes;
 
   /// Error message
   final String? error;
-
-  DrivingSessionResult._(this.routes, this.error);
-
-  factory DrivingSessionResult._fromJson(Map<dynamic, dynamic> json) {
-    return DrivingSessionResult._(
-      json['routes']?.map<DrivingRoute>((dynamic route) => DrivingRoute._fromJson(route)).toList(),
-      json['error']
-    );
-  }
 }
