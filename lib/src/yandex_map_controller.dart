@@ -60,8 +60,8 @@ class YandexMapController extends ChangeNotifier {
   Future<void> selectGeoObject({
     required String objectId,
     required String layerId,
-    int? groupId,
     required String dataSourceName,
+    int? groupId,
   }) async {
     await _channel.invokeMethod('selectGeoObject', {
       'objectId': objectId,
@@ -204,7 +204,7 @@ class YandexMapController extends ChangeNotifier {
       case 'onMapObjectDragEnd':
         return _onMapObjectDragEnd(call.arguments);
       case 'onUserLocationAdded':
-        return await _onUserLocationAdded(call.arguments);
+        return _onUserLocationAdded(call.arguments);
       case 'onCameraPositionChanged':
         return _onCameraPositionChanged(call.arguments);
       default:
@@ -281,7 +281,7 @@ class YandexMapController extends ChangeNotifier {
   void _onClustersRemoved(dynamic arguments) {
     final appearancePlacemarkIds = arguments['appearancePlacemarkIds'];
 
-    for (var appearancePlacemarkId in appearancePlacemarkIds) {
+    for (final appearancePlacemarkId in appearancePlacemarkIds) {
       _yandexMapState._nonRootMapObjects.remove(_findMapObject(_yandexMapState._allMapObjects, appearancePlacemarkId));
     }
   }
@@ -289,9 +289,9 @@ class YandexMapController extends ChangeNotifier {
   Future<Map<String, dynamic>> _onClusterAdded(dynamic arguments) async {
     final id = arguments['id'];
     final size = arguments['size'];
-    final mapObject = _findMapObject(_yandexMapState._allMapObjects, id) as ClusterizedPlacemarkCollection;
+    final mapObject = _findMapObject(_yandexMapState._allMapObjects, id)! as ClusterizedPlacemarkCollection;
     final placemarks = arguments['placemarkIds']
-        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
+        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el)! as PlacemarkMapObject)
         .toList();
     final appearance = PlacemarkMapObject(
       mapId: MapObjectId(arguments['appearancePlacemarkId']),
@@ -308,14 +308,14 @@ class YandexMapController extends ChangeNotifier {
   void _onClusterTap(dynamic arguments) {
     final id = arguments['id'];
     final size = arguments['size'];
-    final mapObject = _findMapObject(_yandexMapState._allMapObjects, id) as ClusterizedPlacemarkCollection;
+    final mapObject = _findMapObject(_yandexMapState._allMapObjects, id)! as ClusterizedPlacemarkCollection;
     final placemarks = arguments['placemarkIds']
-        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el) as PlacemarkMapObject)
+        .map<PlacemarkMapObject>((el) => _findMapObject(mapObject.placemarks, el)! as PlacemarkMapObject)
         .toList();
     final appearance = _findMapObject(
       _yandexMapState._allMapObjects,
       arguments['appearancePlacemarkId'],
-    ) as PlacemarkMapObject;
+    )! as PlacemarkMapObject;
     final cluster = Cluster._(size: size, appearance: appearance, placemarks: placemarks);
 
     mapObject._clusterTap(cluster);
@@ -361,7 +361,7 @@ class YandexMapController extends ChangeNotifier {
   }
 
   MapObject? _findMapObject(List<MapObject> mapObjects, String id) {
-    for (var mapObject in mapObjects) {
+    for (final mapObject in mapObjects) {
       MapObject? foundMapObject;
 
       if (mapObject.mapId.value == id) {

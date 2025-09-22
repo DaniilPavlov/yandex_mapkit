@@ -76,30 +76,28 @@ class MapObjectCollection extends Equatable implements MapObject {
 
   @override
   void _tap(Point point) {
-    if (onTap != null) {
-      onTap!(this, point);
-    }
+    onTap?.call(this, point);
   }
 
   /// Stub for [MapObject]
   /// [MapObjectCollection] does not support drag
   @override
   void _dragStart() {
-    throw UnsupportedError;
+    throw UnsupportedError('_dargStart error');
   }
 
   /// Stub for [MapObject]
   /// [MapObjectCollection] does not support drag
   @override
   void _drag(Point point) {
-    throw UnsupportedError;
+    throw UnsupportedError('_darg error');
   }
 
   /// Stub for [MapObject]
   /// [MapObjectCollection] does not support drag
   @override
   void _dragEnd() {
-    throw UnsupportedError;
+    throw UnsupportedError('_dargEnd error');
   }
 
   @override

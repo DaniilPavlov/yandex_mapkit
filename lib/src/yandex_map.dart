@@ -155,11 +155,10 @@ class _YandexMapState extends State<YandexMap> {
   }
 
   @override
-  void dispose() async {
-    super.dispose();
+  Future<void> dispose() async {
     final controller = await _controller.future;
-
     controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -169,7 +168,7 @@ class _YandexMapState extends State<YandexMap> {
     _updateMapObjects();
   }
 
-  void _updateMapOptions() async {
+  Future<void> _updateMapOptions() async {
     final newOptions = _YandexMapOptions.fromWidget(widget);
     final updates = _yandexMapOptions.mapUpdates(newOptions);
 
@@ -184,7 +183,7 @@ class _YandexMapState extends State<YandexMap> {
     _yandexMapOptions = newOptions;
   }
 
-  void _updateMapObjects() async {
+  Future<void> _updateMapObjects() async {
     final updatedMapObjectCollection = _mapObjectCollection.copyWith(mapObjects: widget.mapObjects);
     final updates = MapObjectUpdates.from({_mapObjectCollection}, {updatedMapObjectCollection});
 
@@ -244,12 +243,8 @@ class _YandexMapState extends State<YandexMap> {
 
   Future<void> _onPlatformViewCreated(int id) async {
     final controller = await YandexMapController._init(id, this);
-
     _controller.complete(controller);
-
-    if (widget.onMapCreated != null) {
-      widget.onMapCreated!(controller);
-    }
+    widget.onMapCreated?.call(controller);
   }
 
   Map<String, dynamic> _creationParams() {

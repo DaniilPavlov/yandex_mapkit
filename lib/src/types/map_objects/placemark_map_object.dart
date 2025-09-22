@@ -127,30 +127,22 @@ class PlacemarkMapObject extends Equatable implements MapObject {
 
   @override
   void _tap(Point point) {
-    if (onTap != null) {
-      onTap!(this, point);
-    }
+    onTap?.call(this, point);
   }
 
   @override
   void _dragStart() {
-    if (onDragStart != null) {
-      onDragStart!(this);
-    }
+    onDragStart?.call(this);
   }
 
   @override
   void _drag(Point point) {
-    if (onDrag != null) {
-      onDrag!(this, point);
-    }
+    onDrag?.call(this, point);
   }
 
   @override
   void _dragEnd() {
-    if (onDragEnd != null) {
-      onDragEnd!(this);
-    }
+    onDragEnd?.call(this);
   }
 
   @override

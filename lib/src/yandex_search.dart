@@ -21,8 +21,8 @@ class YandexSearch {
   /// Reverse search request (to search objects at the given coordinates)
   static Future<(SearchSession, Future<SearchSessionResult>)> searchByPoint({
     required Point point,
-    int? zoom,
     required SearchOptions searchOptions,
+    int? zoom,
   }) async {
     final session = await _initSession();
 

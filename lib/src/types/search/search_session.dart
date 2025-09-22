@@ -61,8 +61,8 @@ class SearchSession {
   /// Starts point search session
   Future<SearchSessionResult> _searchByPoint({
     required Point point,
-    int? zoom,
     required SearchOptions searchOptions,
+    int? zoom,
   }) async {
     final params = <String, dynamic>{
       'point': point.toJson(),

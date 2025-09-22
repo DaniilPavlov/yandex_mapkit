@@ -156,30 +156,28 @@ class PolylineMapObject extends Equatable implements MapObject {
 
   @override
   void _tap(Point point) {
-    if (onTap != null) {
-      onTap!(this, point);
-    }
+    onTap?.call(this, point);
   }
 
   /// Stub for [MapObject]
   /// [PolylineMapObject] does not support drag
   @override
   void _dragStart() {
-    throw UnsupportedError;
+    throw UnsupportedError('_dragStart error');
   }
 
   /// Stub for [MapObject]
   /// [PolylineMapObject] does not support drag
   @override
   void _drag(Point point) {
-    throw UnsupportedError;
+    throw UnsupportedError('_drag error');
   }
 
   /// Stub for [MapObject]
   /// [PolylineMapObject] does not support drag
   @override
   void _dragEnd() {
-    throw UnsupportedError;
+    throw UnsupportedError('_dragEnd error');
   }
 
   @override
