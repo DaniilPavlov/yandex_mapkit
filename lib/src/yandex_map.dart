@@ -156,9 +156,9 @@ class _YandexMapState extends State<YandexMap> {
 
   @override
   Future<void> dispose() async {
+    super.dispose();
     final controller = await _controller.future;
     controller.dispose();
-    super.dispose();
   }
 
   @override
