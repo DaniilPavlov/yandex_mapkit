@@ -60,7 +60,6 @@ class PolygonMapObject extends Equatable implements MapObject {
 
   PolygonMapObject copyWith({
     Polygon? polygon,
-    List<List<Point>>? innerRingsCoordinates,
     bool? isGeodesic,
     double? zIndex,
     TapCallback<PolygonMapObject>? onTap,

@@ -10,25 +10,43 @@ part of '../../yandex_mapkit.dart';
 /// Waypoints are guaranteed to be between sections in the resulting route.
 /// Via points are embedded into sections.
 class RequestPoint extends Equatable {
-  const RequestPoint({required this.point, required this.requestPointType});
-
   /// The request point.
   final Point point;
 
   /// The type of request point specified.
   final RequestPointType requestPointType;
 
+  ///  Opaque string that describe entrances, driving arrival points and so on.
+  final String? pointContext;
+
+  /// Specifies what driving arrival point to use. If point is not specified then server will select one.
+  final String? drivingArrivalPointId;
+
+  /// Indoor level (floor) id
+  final String? indoorLevelId;
+
+  const RequestPoint({
+    required this.point,
+    required this.requestPointType,
+    this.pointContext,
+    this.drivingArrivalPointId,
+    this.indoorLevelId,
+  });
+
   @override
-  List<Object> get props => <Object>[
-        point,
-        requestPointType,
-      ];
+  List<Object?> get props => <Object?>[point, requestPointType, pointContext, drivingArrivalPointId, indoorLevelId];
 
   @override
   bool get stringify => true;
 
   Map<String, dynamic> toJson() {
-    return {'requestPointType': requestPointType.value, 'point': point.toJson()};
+    return {
+      'requestPointType': requestPointType.value,
+      'point': point.toJson(),
+      'pointContext': pointContext,
+      'drivingArrivalPointId': drivingArrivalPointId,
+      'indoorLevelId': indoorLevelId,
+    };
   }
 }
 

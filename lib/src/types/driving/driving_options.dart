@@ -3,6 +3,23 @@ part of '../../../yandex_mapkit.dart';
 /// Options to fine-tune driving request.
 
 class DrivingOptions extends Equatable {
+  /// Starting location azimuth.
+  final double? initialAzimuth;
+
+  /// The number of alternatives.
+  final int? routesCount;
+
+  /// Desired departure time in UTC for a time-dependent route request.
+  /// This option cannot be used with [arrivalTime].
+  final DateTime? departureTime;
+
+  /// A method to set the annotation language.
+  final AnnotationLanguage? annotationLanguage;
+
+  /// The 'avoidanceFlags' instruct the router to return routes that avoid
+  /// roads with the specified properties when possible.
+  final DrivingAvoidanceFlags? avoidanceFlags;
+
   const DrivingOptions({
     this.initialAzimuth,
     this.routesCount,
@@ -11,32 +28,13 @@ class DrivingOptions extends Equatable {
     this.avoidanceFlags,
   });
 
-  /// Starting location azimuth.
-  ///
-  final double? initialAzimuth;
-
-  /// The number of alternatives.
-  ///
-  final int? routesCount;
-  final DateTime? departureTime;
-
-  /// A method to set the annotation language. lang The annotation
-  /// language.
-  ///
-  final AnnotationLanguage? annotationLanguage;
-
-  /// The 'avoidanceFlags' instruct the router to return routes that avoid
-  /// roads with the specified properties when possible.
-  ///
-  final DrivingAvoidanceFlags? avoidanceFlags;
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'initialAzimuth': initialAzimuth,
       'routesCount': routesCount,
       'departureTime': departureTime,
-      'annotationLanguage': annotationLanguage,
-      'avoidanceFlags': avoidanceFlags,
+      'annotationLanguage': annotationLanguage?.index,
+      'avoidanceFlags': avoidanceFlags?.toJson()
     };
   }
 
@@ -44,8 +42,8 @@ class DrivingOptions extends Equatable {
   List<Object?> get props => <Object?>[
         initialAzimuth,
         routesCount,
-        departureTime,
         annotationLanguage,
+        departureTime?.millisecondsSinceEpoch,
         avoidanceFlags,
       ];
 

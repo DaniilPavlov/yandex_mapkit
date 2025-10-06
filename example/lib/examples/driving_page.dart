@@ -77,7 +77,11 @@ class _DrivingExampleState extends State<_DrivingExample> {
         RequestPoint(point: stopByPlacemark.point, requestPointType: RequestPointType.viaPoint),
         RequestPoint(point: endPlacemark.point, requestPointType: RequestPointType.wayPoint),
       ],
-      drivingOptions: const DrivingOptions(initialAzimuth: 0, routesCount: 5),
+      drivingOptions: const DrivingOptions(
+        initialAzimuth: 0,
+        routesCount: 5,
+        avoidanceFlags: DrivingAvoidanceFlags(),
+      ),
     );
 
     if (!mounted) return;

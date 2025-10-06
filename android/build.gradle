@@ -48,5 +48,5 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.yandex.android:maps.mobile:4.19.0-' + variant
+    implementation 'com.yandex.android:maps.mobile:4.22.0-' + variant
 }

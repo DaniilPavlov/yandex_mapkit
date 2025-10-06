@@ -53,7 +53,9 @@ class _UserLayerExampleState extends State<_UserLayerExample> {
                     PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage('lib/assets/arrow.png')),
                   ),
                 ),
-                accuracyCircle: view.accuracyCircle.copyWith(fillColor: Colors.green.withValues(alpha: 0.5)),
+                accuracyCircle: view.accuracyCircle.copyWith(
+                  fillColor: Colors.green.withValues(alpha: 0.5),
+                ),
               );
             },
           ),

@@ -23,14 +23,13 @@ class PedestrianSession {
     await _methodChannel.invokeMethod<void>('close');
   }
 
-  Future<PedestrianSessionResult> _requestRoutes({
-    required List<RequestPoint> points,
-    required bool avoidSteep,
-    required TimeOptions timeOptions,
-  }) async {
+  Future<PedestrianSessionResult> _requestRoutes(
+      {required List<RequestPoint> points,
+      required FitnessOptions fitnessOptions,
+      required TimeOptions timeOptions}) async {
     final params = <String, dynamic>{
       'timeOptions': timeOptions.toJson(),
-      'avoidSteep': avoidSteep,
+      'fitnessOptions': fitnessOptions.toJson(),
       'points': points.map((RequestPoint requestPoint) => requestPoint.toJson()).toList(),
     };
     final result = await _methodChannel.invokeMethod('requestRoutes', params);
@@ -44,17 +43,16 @@ class PedestrianSession {
 class PedestrianSessionResult {
   PedestrianSessionResult._(this.routes, this.error);
 
-  factory PedestrianSessionResult._fromJson(Map<dynamic, dynamic> json) {
-    return PedestrianSessionResult._(
-      // ignore: avoid_dynamic_calls
-      json['routes']?.map<PedestrianRoute>((dynamic route) => PedestrianRoute._fromJson(route)).toList(),
-      json['error'],
-    );
-  }
-
   /// Calculated routes
-  final List<PedestrianRoute>? routes;
+  final List<MasstransitRoute>? routes;
 
   /// Error message
   final String? error;
+
+  factory PedestrianSessionResult._fromJson(Map<dynamic, dynamic> json) {
+    return PedestrianSessionResult._(
+        // ignore: avoid_dynamic_calls
+        json['routes']?.map<MasstransitRoute>((dynamic route) => MasstransitRoute._fromJson(route)).toList(),
+        json['error']);
+  }
 }
